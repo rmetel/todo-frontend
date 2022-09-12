@@ -18,6 +18,10 @@ function App() {
         {
             "id": 2,
             "description": "Essen zubereiten"
+        },
+        {
+            "id": 3,
+            "description": "Buch lesen"
         }
     ]
     return (
@@ -39,7 +43,7 @@ function App() {
                             </Button>
                         </InputGroup>
 
-                        <ListGroup>
+                        <ListGroup as="ol" numbered>
                             {tasks.map(task =>
                                 <ListGroup.Item key={task.id}>{task.description}</ListGroup.Item>
                             )}
