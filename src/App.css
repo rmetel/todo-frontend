@@ -38,3 +38,10 @@
     transform: rotate(360deg);
   }
 }
+
+.alert[role=alert] {
+  position: fixed;
+  bottom: 15px;
+  z-index: 1000;
+  right: 15px;
+}
