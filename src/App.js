@@ -18,11 +18,11 @@ class App extends React.Component {
 
         let isLocal = window.location.href.indexOf("localhost") > -1;
         let localHost = "http://localhost:8080";
-        let apiEndpoint = "/tasks";
+        let apiEndpoint = "/api";
 
         this.apiUrl = isLocal? localHost + apiEndpoint : apiEndpoint;
         this.getAll = this.getAll.bind(this);
-        this.add = this.add.bind(this);
+        this.addTask = this.addTask.bind(this);
         this.state = {tasks: []};
 
     }
@@ -32,12 +32,12 @@ class App extends React.Component {
     }
 
     getAll() {
-        fetch(this.apiUrl + "/all")
+        fetch(this.apiUrl + "/tasks")
             .then(response => response.json())
             .then(data => this.setState({tasks: data}));
     }
 
-    add() {
+    addTask() {
         const getAll = this.getAll;
 
         let alertBox = document.querySelector("[role=alert]");
@@ -46,7 +46,7 @@ class App extends React.Component {
             description: document.getElementById(`description`).value
         };
 
-        axios.post(this.apiUrl + "/add", params)
+        axios.post(this.apiUrl + "/tasks/add", params)
             .then(function (response) {
                 if(response.status === 200) {
                     alertBox.innerHTML = `Task wurde erstellt!`;
@@ -81,7 +81,7 @@ class App extends React.Component {
                                     aria-label="ToDo"
                                     aria-describedby="new task"
                                 />
-                                <Button variant="outline-secondary" id="button-add" onClick={this.add}>
+                                <Button variant="outline-secondary" id="button-add" onClick={this.addTask}>
                                     Add
                                 </Button>
                             </InputGroup>
