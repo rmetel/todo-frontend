@@ -29,6 +29,13 @@ class App extends React.Component {
 
     componentDidMount() {
         this.getAll();
+        this.inputField = document.getElementById(`description`);
+    }
+
+    onKeyEnterSubmit(e){
+        if(e.code === "Enter") {
+            this.addTask();
+        }
     }
 
     getAll() {
@@ -39,22 +46,24 @@ class App extends React.Component {
 
     addTask() {
         const getAll = this.getAll;
+        const inputField = this.inputField;
 
         let alertBox = document.querySelector("[role=alert]");
 
         let params = {
-            description: document.getElementById(`description`).value
+            description: inputField.value
         };
 
         axios.post(this.apiUrl + "/tasks/add", params)
             .then(function (response) {
                 if(response.status === 200) {
-                    alertBox.innerHTML = `Task wurde erstellt!`;
+                    alertBox.innerHTML = `Task "${inputField.value}" wurde erstellt!`;
                     alertBox.classList.remove("d-none");
                     window.setTimeout(function() {
                         alertBox.classList.add("d-none");
                     }, 2000);
 
+                    inputField.value = "";
                     getAll();
                 }
             })
@@ -80,6 +89,7 @@ class App extends React.Component {
                                     placeholder="New task"
                                     aria-label="ToDo"
                                     aria-describedby="new task"
+                                    onKeyDown={this.onKeyEnterSubmit.bind(this)}
                                 />
                                 <Button variant="outline-secondary" id="button-add" onClick={this.addTask}>
                                     Add
