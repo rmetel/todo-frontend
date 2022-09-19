@@ -45,3 +45,11 @@
   z-index: 1000;
   right: 15px;
 }
+
+.text-right {
+  text-align: right;
+}
+
+.deleteTask {
+  font-size: 12px;
+}

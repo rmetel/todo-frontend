@@ -3,6 +3,7 @@ import './App.css';
 import {
     Alert,
     Button,
+    CloseButton,
     Col,
     Container,
     Form,
@@ -72,6 +73,28 @@ class App extends React.Component {
             });
     }
 
+    deleteTask(task) {
+        const getAll = this.getAll;
+
+        let alertBox = document.querySelector("[role=alert]");
+
+        axios.delete(this.apiUrl + "/tasks/" + task.id)
+            .then(function (response) {
+                if(response.status === 200) {
+                    alertBox.innerHTML = `Task "${task.description}" wurde gelöscht!`;
+                    alertBox.classList.remove("d-none");
+                    window.setTimeout(function() {
+                        alertBox.classList.add("d-none");
+                    }, 2000);
+
+                    getAll();
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
     render() {
         const {tasks} = this.state;
         return (
@@ -96,9 +119,18 @@ class App extends React.Component {
                                 </Button>
                             </InputGroup>
 
-                            <ListGroup as="ol" numbered>
+                            <ListGroup>
                                 {tasks.map(task =>
-                                    <ListGroup.Item key={task.id}>{task.description}</ListGroup.Item>
+                                    <ListGroup.Item key={task.id}>
+                                        <Row>
+                                            <Col className={"col-10 col-lg-10"}>
+                                                {task.id}. {task.description}
+                                            </Col>
+                                            <Col xs={2} lg={2} className={"text-right"}>
+                                                <CloseButton className={"deleteTask"} onClick={() => { this.deleteTask(task) }} />
+                                            </Col>
+                                        </Row>
+                                    </ListGroup.Item>
                                 )}
                             </ListGroup>
 
