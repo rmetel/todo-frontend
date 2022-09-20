@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import {
     Alert,
+    Badge,
     Button,
     CloseButton,
     Col,
@@ -108,7 +109,9 @@ class App extends React.Component {
         return (
             <div className="App">
                 <Alert variant="success" className="d-none"></Alert>
-                <div id={"apiVersion"}>v{api.version}</div>
+                <h6 id={"apiVersion"}>
+                    <Badge bg="secondary">v{api.version}</Badge>
+                </h6>
                 <Container className="mt-4">
                     <Row>
                         <Col className={"col-lg-8 offset-lg-2"}>
@@ -135,7 +138,8 @@ class App extends React.Component {
                                             <Col className={"col-10 col-lg-10"}>
                                                 {task.id}. {task.description}
                                             </Col>
-                                            <Col xs={2} lg={2} className={"text-right"}>
+                                            <Col xs={2} className={"text-right"}>
+                                                <i className="bi-pencil mr-4"></i>
                                                 <CloseButton className={"deleteTask"} onClick={() => { this.deleteTask(task) }} />
                                             </Col>
                                         </Row>
