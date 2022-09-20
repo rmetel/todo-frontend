@@ -59,3 +59,20 @@
   bottom: 15px;
   right: 15px;
 }
+
+i:hover::before {
+  color: #74cfb1;
+}
+
+.mr-1 {
+  margin-right: 0.25rem!important;
+}
+.mr-2 {
+  margin-right: 0.5rem!important;
+}
+.mr-3 {
+  margin-right: 0.75rem!important;
+}
+.mr-4 {
+  margin-right: 1rem!important;
+}
