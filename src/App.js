@@ -1,51 +1,29 @@
 import React from 'react';
 import './App.css';
-import {
-    Alert,
-    Badge,
-    Button,
-    CloseButton,
-    Col,
-    Container,
-    Form,
-    InputGroup,
-    ListGroup,
-    Row
-} from "react-bootstrap";
-import axios from 'axios';
+import {Alert, Badge} from "react-bootstrap";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import Tasks from './components/Tasks';
+import TaskDetails from './components/TaskDetails';
 
 class App extends React.Component {
     constructor(props) {
         super(props);
 
-        let isLocal = window.location.href.indexOf("localhost") > -1;
-        let localHost = "http://localhost:8080";
-        let apiEndpoint = "/api";
-
-        this.apiUrl = isLocal? localHost + apiEndpoint : apiEndpoint;
-        this.getAll = this.getAll.bind(this);
-        this.addTask = this.addTask.bind(this);
+        this.getApiUrl = this.getApiUrl.bind(this);
         this.getApiVersion = this.getApiVersion.bind(this);
-        this.state = {tasks: [], api: {}};
-
+        this.apiUrl = this.getApiUrl();
+        this.state = {api: {}};
     }
 
     componentDidMount() {
         this.getApiVersion();
-        this.getAll();
-        this.inputField = document.getElementById(`description`);
     }
 
-    onKeyEnterSubmit(e){
-        if(e.code === "Enter") {
-            this.addTask();
-        }
-    }
-
-    getAll() {
-        fetch(this.apiUrl + "/tasks")
-            .then(response => response.json())
-            .then(data => this.setState({tasks: data}));
+    getApiUrl() {
+        let isLocal = window.location.href.indexOf("localhost") > -1;
+        let localHost = "http://localhost:8080";
+        let apiEndpoint = "/api";
+        return isLocal ? localHost + apiEndpoint : apiEndpoint;
     }
 
     getApiVersion() {
@@ -54,102 +32,20 @@ class App extends React.Component {
             .then(data => this.setState({api: data}));
     }
 
-    addTask() {
-        const getAll = this.getAll;
-        const inputField = this.inputField;
-
-        let alertBox = document.querySelector("[role=alert]");
-
-        let params = {
-            description: inputField.value
-        };
-
-        axios.post(this.apiUrl + "/tasks/add", params)
-            .then(function (response) {
-                if(response.status === 200) {
-                    alertBox.innerHTML = `Task "${inputField.value}" wurde erstellt!`;
-                    alertBox.classList.remove("d-none");
-                    window.setTimeout(function() {
-                        alertBox.classList.add("d-none");
-                    }, 2000);
-
-                    inputField.value = "";
-                    getAll();
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    }
-
-    deleteTask(task) {
-        const getAll = this.getAll;
-
-        let alertBox = document.querySelector("[role=alert]");
-
-        axios.delete(this.apiUrl + "/tasks/" + task.id)
-            .then(function (response) {
-                if(response.status === 200) {
-                    alertBox.innerHTML = `Task "${task.description}" wurde gelöscht!`;
-                    alertBox.classList.remove("d-none");
-                    window.setTimeout(function() {
-                        alertBox.classList.add("d-none");
-                    }, 2000);
-
-                    getAll();
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    }
-
     render() {
-        const {tasks, api} = this.state;
+        const {api} = this.state;
         return (
             <div className="App">
+                <Router>
+                    <Routes>
+                        <Route path="/" element={<Tasks getApiUrl={this.getApiUrl}/>}/>
+                        <Route path="/tasks/:taskId" element={<TaskDetails getApiUrl={this.getApiUrl}/>}/>
+                    </Routes>
+                </Router>
                 <Alert variant="success" className="d-none"></Alert>
                 <h6 id={"apiVersion"}>
                     <Badge bg="secondary">v{api.version}</Badge>
                 </h6>
-                <Container className="mt-4">
-                    <Row>
-                        <Col className={"col-lg-8 offset-lg-2"}>
-                            <div className={"text-center mb-4"}>
-                                <h1>ToDo List</h1>
-                            </div>
-                            <InputGroup className="mb-3">
-                                <Form.Control
-                                    id={"description"}
-                                    placeholder="New task"
-                                    aria-label="ToDo"
-                                    aria-describedby="new task"
-                                    onKeyDown={this.onKeyEnterSubmit.bind(this)}
-                                />
-                                <Button variant="outline-secondary" id="button-add" onClick={this.addTask}>
-                                    Add
-                                </Button>
-                            </InputGroup>
-
-                            <ListGroup>
-                                {tasks.map(task =>
-                                    <ListGroup.Item key={task.id}>
-                                        <Row>
-                                            <Col className={"col-10 col-lg-10"}>
-                                                {task.id}. {task.description}
-                                            </Col>
-                                            <Col xs={2} className={"text-right"}>
-                                                <i className="bi-pencil mr-4"></i>
-                                                <CloseButton className={"deleteTask"} onClick={() => { this.deleteTask(task) }} />
-                                            </Col>
-                                        </Row>
-                                    </ListGroup.Item>
-                                )}
-                            </ListGroup>
-
-                        </Col>
-                    </Row>
-                </Container>
             </div>
         );
     }
