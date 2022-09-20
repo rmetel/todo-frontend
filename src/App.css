@@ -53,3 +53,9 @@
 .deleteTask {
   font-size: 12px;
 }
+
+#apiVersion {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+}

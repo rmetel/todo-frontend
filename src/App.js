@@ -24,11 +24,13 @@ class App extends React.Component {
         this.apiUrl = isLocal? localHost + apiEndpoint : apiEndpoint;
         this.getAll = this.getAll.bind(this);
         this.addTask = this.addTask.bind(this);
-        this.state = {tasks: []};
+        this.getApiVersion = this.getApiVersion.bind(this);
+        this.state = {tasks: [], api: {}};
 
     }
 
     componentDidMount() {
+        this.getApiVersion();
         this.getAll();
         this.inputField = document.getElementById(`description`);
     }
@@ -43,6 +45,12 @@ class App extends React.Component {
         fetch(this.apiUrl + "/tasks")
             .then(response => response.json())
             .then(data => this.setState({tasks: data}));
+    }
+
+    getApiVersion() {
+        fetch(this.apiUrl + "/version")
+            .then(response => response.json())
+            .then(data => this.setState({api: data}));
     }
 
     addTask() {
@@ -96,10 +104,11 @@ class App extends React.Component {
     }
 
     render() {
-        const {tasks} = this.state;
+        const {tasks, api} = this.state;
         return (
             <div className="App">
                 <Alert variant="success" className="d-none"></Alert>
+                <div id={"apiVersion"}>v{api.version}</div>
                 <Container className="mt-4">
                     <Row>
                         <Col className={"col-lg-8 offset-lg-2"}>
