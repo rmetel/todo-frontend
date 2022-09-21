@@ -1,9 +1,10 @@
 import React from 'react';
 import './App.css';
-import {Alert, Badge} from "react-bootstrap";
+import {Badge} from "react-bootstrap";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Tasks from './components/Tasks';
 import TaskDetails from './components/TaskDetails';
+import "izitoast/dist/js/iziToast.min";
 
 class App extends React.Component {
     constructor(props) {
@@ -42,7 +43,6 @@ class App extends React.Component {
                         <Route path="/tasks/:taskId" element={<TaskDetails getApiUrl={this.getApiUrl}/>}/>
                     </Routes>
                 </Router>
-                <Alert variant="success" className="d-none"></Alert>
                 <h6 id={"apiVersion"}>
                     <Badge bg="secondary">v{api.version}</Badge>
                 </h6>

@@ -3,13 +3,13 @@ import React from "react";
 import {Button, CloseButton, Col, Container, Form, InputGroup, ListGroup, Row} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import axios from "axios";
+import iziToast from "izitoast";
 
 class Tasks extends React.Component {
     constructor(props) {
         super(props);
 
         this.apiUrl = this.props.getApiUrl();
-
         this.addTask = this.addTask.bind(this);
         this.getAll = this.getAll.bind(this);
 
@@ -31,8 +31,6 @@ class Tasks extends React.Component {
         const getAll = this.getAll;
         const inputField = this.inputField;
 
-        let alertBox = document.querySelector("[role=alert]");
-
         let params = {
             description: inputField.value
         };
@@ -40,11 +38,14 @@ class Tasks extends React.Component {
         axios.post(this.apiUrl + "/tasks/add", params)
             .then(function (response) {
                 if (response.status === 200) {
-                    alertBox.innerHTML = `Task "${inputField.value}" wurde erstellt!`;
-                    alertBox.classList.remove("d-none");
-                    window.setTimeout(function () {
-                        alertBox.classList.add("d-none");
-                    }, 2000);
+                    iziToast.show({
+                        theme: 'dark',
+                        icon: 'icon-person',
+                        title: `Task "${inputField.value}" wurde erstellt!`,
+                        position: 'bottomCenter', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                        progressBarColor: 'rgb(0, 255, 184)',
+                        timeout: 3000
+                    });
 
                     inputField.value = "";
                     getAll();
@@ -58,16 +59,17 @@ class Tasks extends React.Component {
     deleteTask(task) {
         const getAll = this.getAll;
 
-        let alertBox = document.querySelector("[role=alert]");
-
         axios.delete(this.apiUrl + "/tasks/" + task.id)
             .then(function (response) {
                 if (response.status === 200) {
-                    alertBox.innerHTML = `Task "${task.description}" wurde gelöscht!`;
-                    alertBox.classList.remove("d-none");
-                    window.setTimeout(function () {
-                        alertBox.classList.add("d-none");
-                    }, 2000);
+                    iziToast.show({
+                        theme: 'dark',
+                        icon: 'icon-person',
+                        title: `Task "${task.description}" wurde gelöscht!`,
+                        position: 'bottomCenter', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                        progressBarColor: 'rgb(241,81,86)',
+                        timeout: 3000
+                    });
 
                     getAll();
                 }

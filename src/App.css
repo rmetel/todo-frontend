@@ -1,5 +1,6 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
+@import 'izitoast/dist/css/iziToast.min.css';
 
 .App {
 }
@@ -37,13 +38,6 @@
   to {
     transform: rotate(360deg);
   }
-}
-
-.alert[role=alert] {
-  position: fixed;
-  bottom: 15px;
-  z-index: 1000;
-  right: 15px;
 }
 
 .text-right {
