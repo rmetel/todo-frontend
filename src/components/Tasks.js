@@ -109,11 +109,11 @@ class Tasks extends React.Component {
                             </InputGroup>
 
                             <ListGroup>
-                                {tasks.map(task =>
+                                {tasks.map((task, index) =>
                                     <ListGroup.Item key={task.id}>
                                         <Row>
                                             <Col className={"col-10 col-lg-10"}>
-                                                {task.id}. {task.description}
+                                                {index + 1}. {task.description}
                                             </Col>
                                             <Col xs={2} className={"text-right"}>
                                                 <Link to={`/tasks/${task.id}`}><i className="bi-pencil mr-4"></i></Link>
