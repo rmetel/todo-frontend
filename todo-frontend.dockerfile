@@ -18,3 +18,7 @@ ENTRYPOINT ["npm","start"]
 # terminal
 # docker build -t todo-frontend -f todo-frontend.dockerfile .
 # docker run --name todo-frontend -dp 3000:3000 todo-frontend
+
+# with docker hub
+# docker build -t rmetel/todo-frontend:1.0 -f todo-frontend.dockerfile .
+# docker run --name todo-frontend -dp 3000:3000 rmetel/todo-frontend:1.0

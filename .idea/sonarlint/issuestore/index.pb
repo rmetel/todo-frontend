@@ -10,3 +10,11 @@ S
 :
 
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
+;
+src/App.css,a\a\aa7165aefcf8ee3d73539e99ab007daf1aa18d8d
+M
+src/components/TaskDetails.js,7\7\77c6efe4b8d25716f33c1ae82499d986640f5e82
+<
+package.json,7\0\7030d0b2f71b999ff89a343de08c414af32fc93a
+A
+package-lock.json,f\a\fa288d1472d29beccb489a676f68739ad365fc47
