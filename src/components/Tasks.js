@@ -35,7 +35,7 @@ class Tasks extends React.Component {
             description: inputField.value
         };
 
-        axios.post(this.apiUrl + "/tasks/add", params)
+        axios.post(this.apiUrl + "/tasks", params)
             .then(function (response) {
                 if (response.status === 200) {
                     iziToast.show({
