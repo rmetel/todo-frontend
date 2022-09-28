@@ -51,8 +51,15 @@ class Tasks extends React.Component {
                     getAll();
                 }
             })
-            .catch(function (error) {
-                console.log(error);
+            .catch(function (e) {
+                iziToast.show({
+                    theme: 'dark',
+                    icon: 'icon-person',
+                    title: `${e.name}: ${e.message}`,
+                    position: 'bottomCenter', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                    progressBarColor: 'rgb(241,81,86)',
+                    timeout: 10000
+                });
             });
     }
 
