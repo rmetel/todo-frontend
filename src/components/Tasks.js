@@ -58,7 +58,7 @@ class Tasks extends React.Component {
                     title: `${e.name}: ${e.message}`,
                     position: 'bottomCenter', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
                     progressBarColor: 'rgb(241,81,86)',
-                    timeout: 10000
+                    timeout: 5000
                 });
             });
     }
