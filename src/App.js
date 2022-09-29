@@ -22,7 +22,7 @@ class App extends React.Component {
 
     getApiUrl() {
         let isLocal = window.location.href.indexOf("localhost") > -1;
-        let localHost = "http://localhost:8080";
+        let localHost = "http://localhost:5000";
         let apiEndpoint = "/api";
         return isLocal ? localHost + apiEndpoint : apiEndpoint;
     }
