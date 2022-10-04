@@ -115,10 +115,10 @@ class Tasks extends React.Component {
                     {tasks.map((task, index) =>
                         <ListGroup.Item key={task.id}>
                             <Row>
-                                <Col className={"col-10 col-lg-10"}>
+                                <Col xs={9} lg={10}>
                                     {index + 1}. {task.description}
                                 </Col>
-                                <Col xs={2} className={"text-right"}>
+                                <Col xs={3} lg={2} className={"text-right"}>
                                     <Link to={`/tasks/${task.id}`}><i className="bi-pencil mr-4"></i></Link>
                                     <CloseButton className={"deleteTask"} onClick={() => {
                                         this.deleteTask(task)
@@ -128,24 +128,14 @@ class Tasks extends React.Component {
                         </ListGroup.Item>
                     )}
                 </ListGroup>
-        } else if (error) {
-            content =
-                <div>
-                    <div className="d-flex justify-content-center">
-                        Fehler beim Verbinden...
-                    </div>
-                    <div className="d-flex justify-content-center">
-                        <i className={"bi-cloud-slash"} style={stylesObj}></i>
-                    </div>
-                </div>
         } else {
             content =
                 <div>
                     <div className="d-flex justify-content-center">
-                        Lädt Daten...
+                        {error ? "Fehler beim Verbinden..." : "Lädt Daten..."}
                     </div>
                     <div className="d-flex justify-content-center">
-                        <i className={"bi-cloud-arrow-down"} style={stylesObj}></i>
+                        {error ? <i className={"bi-cloud-slash"} style={stylesObj}></i> : <i className={"bi-cloud-arrow-down"} style={stylesObj}></i>}
                     </div>
                 </div>
         }
