@@ -10,9 +10,9 @@ S
 :
 
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
-;
-src/App.css,a\a\aa7165aefcf8ee3d73539e99ab007daf1aa18d8d
 A
 package-lock.json,f\a\fa288d1472d29beccb489a676f68739ad365fc47
 M
 src/components/TaskDetails.js,7\7\77c6efe4b8d25716f33c1ae82499d986640f5e82
+<
+src/index.js,f\9\f900edc44cb929c2267a16100a32851f6d5b477d

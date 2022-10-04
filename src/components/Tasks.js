@@ -11,6 +11,7 @@ class Tasks extends React.Component {
 
         this.apiUrl = this.props.getApiUrl();
         this.addTask = this.addTask.bind(this);
+        this.updateTask = this.updateTask.bind(this);
         this.getAll = this.getAll.bind(this);
 
         this.state = {tasks: [], isLoaded: false, error: null};
@@ -97,6 +98,39 @@ class Tasks extends React.Component {
             });
     }
 
+    updateTask(task) {
+        let params = {
+            id: task.id,
+            description: task.description,
+            done: !task.done
+        };
+
+        axios.put(this.apiUrl + "/tasks/" + task.id, params)
+            .then(function (response) {
+                if (response.status === 200) {
+                    iziToast.show({
+                        theme: 'dark',
+                        icon: 'icon-person',
+                        title: `Task "${task.description}" wurde aktualisiert!`,
+                        position: 'bottomCenter', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                        progressBarColor: 'rgb(0, 255, 184)',
+                        timeout: 3000
+                    });
+                }
+            })
+            .catch(function (e) {
+                iziToast.show({
+                    theme: 'dark',
+                    icon: 'icon-person',
+                    title: `${e.name}: ${e.message}`,
+                    position: 'bottomCenter', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                    progressBarColor: 'rgb(241,81,86)',
+                    timeout: 5000
+                });
+            });
+
+    }
+
     onKeyEnterSubmit(e) {
         if (e.code === "Enter") {
             this.addTask();
@@ -116,6 +150,9 @@ class Tasks extends React.Component {
                         <ListGroup.Item key={task.id}>
                             <Row>
                                 <Col xs={9} lg={10}>
+                                    <span onClick={() => {this.updateTask(task)}}>
+                                        {task.done ? <i className="bi-check-circle mr-2"/> : <i className="bi-circle mr-2"/>}
+                                    </span>
                                     {index + 1}. {task.description}
                                 </Col>
                                 <Col xs={3} lg={2} className={"text-right"}>
