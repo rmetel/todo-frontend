@@ -14,3 +14,5 @@ S
 src/App.css,a\a\aa7165aefcf8ee3d73539e99ab007daf1aa18d8d
 A
 package-lock.json,f\a\fa288d1472d29beccb489a676f68739ad365fc47
+M
+src/components/TaskDetails.js,7\7\77c6efe4b8d25716f33c1ae82499d986640f5e82
