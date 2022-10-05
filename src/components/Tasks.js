@@ -99,6 +99,8 @@ class Tasks extends React.Component {
     }
 
     updateTask(task) {
+        const getAll = this.getAll;
+
         let params = {
             id: task.id,
             description: task.description,
@@ -116,6 +118,8 @@ class Tasks extends React.Component {
                         progressBarColor: 'rgb(0, 255, 184)',
                         timeout: 3000
                     });
+
+                    getAll();
                 }
             })
             .catch(function (e) {
