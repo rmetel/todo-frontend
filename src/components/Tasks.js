@@ -21,8 +21,6 @@
                 .then((tasks) => {
                     setLoaded(true);
                     setTasks(tasks);
-                    console.log("tasks:");
-                    console.log(tasks);
                 })
                 .catch(error => {
                     setIsError(true);
