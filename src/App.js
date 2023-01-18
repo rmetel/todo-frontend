@@ -39,7 +39,7 @@ class App extends React.Component {
             <div className="App">
                 <Router>
                     <Routes>
-                        <Route path="/" element={<Tasks getApiUrl={this.getApiUrl}/>}/>
+                        <Route path="/" element={<Tasks apiUrl={this.getApiUrl()}/>}/>
                         <Route path="/tasks/:taskId" element={<TaskDetails getApiUrl={this.getApiUrl}/>}/>
                     </Routes>
                 </Router>
