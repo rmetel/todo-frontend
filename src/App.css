@@ -76,3 +76,7 @@ i:hover::before {
   color: green;
   font-size: 18px;
 }
+
+.list-group-item.resolved {
+  text-decoration: line-through;
+}

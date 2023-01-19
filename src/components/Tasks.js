@@ -155,13 +155,13 @@
                             {isLoaded ? 
                                 <ListGroup>
                                     {tasks.map((task, index) =>
-                                        <ListGroup.Item key={task.id}>
+                                        <ListGroup.Item key={task.id} className={task.done ? "resolved" : ""}>
                                             <Row>
                                                 <Col xs={9} lg={10}>
-                                                    <span onClick={() => {updateTask(task)}}>
-                                                        {task.done ? <i className="bi-check-circle mr-2"/> : <i className="bi-circle mr-2"/>}
-                                                    </span>
-                                                    {index + 1}. {task.description}
+                                                  <span onClick={() => {updateTask(task)}}>
+                                                      {task.done ? <i className="bi-check-circle mr-2"/> : <i className="bi-circle mr-2"/>}
+                                                  </span>
+                                                  {index + 1}. {task.description}
                                                 </Col>
                                                 <Col xs={3} lg={2} className={"text-right"}>
                                                     <Link to={`/tasks/${task.id}`}><i className="bi-pencil mr-4"></i></Link>
