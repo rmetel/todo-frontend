@@ -2,36 +2,34 @@ import React, { useEffect, useState } from 'react';
 import {NavLink, useParams} from "react-router-dom";
 import { Container } from "react-bootstrap";
 
-function TaskDetails() {
-    const {taskId}: any = useParams();
+interface TaskDetailsProps {
+    apiUrl: string;
+}
+
+const TaskDetails: React.FC<TaskDetailsProps> = ({ apiUrl }) => {
+    const { taskId }: any = useParams();
     return (
-        <TaskView taskId={taskId}/>
+        <TaskView apiUrl={apiUrl} taskId={taskId}/>
     );
 }
 
 interface TaskViewProps {
+    apiUrl: string;
     taskId: number;
 }
 
-const TaskView: React.FC<TaskViewProps> = ({ taskId }) => {
+const TaskView: React.FC<TaskViewProps> = ({ apiUrl, taskId }) => {
     const [task, setTask] = useState({id: "", description: ""});
     const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
-        fetch(getApiUrl() + "/tasks/" + taskId)
+        fetch(apiUrl + "/tasks/" + taskId)
             .then(response => response.json())
             .then((task) => {
                 setIsLoaded(true);
                 setTask(task);
             });
-    }, [taskId])
-
-    const getApiUrl = () => {
-        let isLocal = window.location.href.indexOf("localhost") > -1;
-        let localHost = "http://localhost:5000";
-        let apiEndpoint = "/api";
-        return isLocal ? localHost + apiEndpoint : apiEndpoint;
-    }
+    }, [apiUrl, taskId])
 
     return isLoaded ?
     (
