@@ -93,7 +93,9 @@ jobs:
           command: ssh-keyscan $SSH_HOST >> ~/.ssh/known_hosts
       - run:
           name: Deploy over SSH
-          command: ssh $SSH_USER@$SSH_HOST 'cd ~/git/todo-backend && git pull && docker-compose -f docker/docker-compose-prod.yaml up -d'
+          command: >
+            ssh $SSH_USER@$SSH_HOST 
+            'cd ~/git/todo-backend && git pull && docker-compose -f docker/docker-compose-prod.yaml up -d && docker ps --filter "name=todo-frontend" | grep "Up"'
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
