@@ -86,7 +86,7 @@ const Tasks: React.FC<TasksProps> = ({ apiUrl }) => {
             });
     }
 
-    const updateTask = (task: Task) => {
+    const updateTaskStatus = (task: Task) => {
         let params = {
             id: task.id,
             description: task.description,
@@ -161,7 +161,7 @@ const Tasks: React.FC<TasksProps> = ({ apiUrl }) => {
                                 <ListGroup.Item key={task.id} className={task.done ? "resolved" : ""}>
                                     <Row>
                                         <Col xs={9} lg={10}>
-                                          <span onClick={() => {updateTask(task)}}>
+                                          <span onClick={() => {updateTaskStatus(task)}}>
                                               {task.done ? <i className="bi-check-circle mr-2"/> : <i className="bi-circle mr-2"/>}
                                           </span>
                                           {index + 1}. {task.description}
