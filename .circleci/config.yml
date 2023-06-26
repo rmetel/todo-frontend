@@ -102,13 +102,13 @@ workflows:
       - docker-push:
           context:
             - build-context
-#          requires:
-#            - build
-#          filters:
-#            branches:
-#              only: master
-#      - deploy:
-#          context:
-#            - build-context
-#          requires:
-#            - docker-push
+      #          requires:
+      #            - build
+      #          filters:
+      #            branches:
+      #              only: master
+      - deploy:
+          context:
+            - build-context
+          requires:
+            - docker-push
