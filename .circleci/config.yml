@@ -80,7 +80,7 @@ jobs:
 
   deploy:
     docker:
-      - image: cimg/node:16.20.1
+      - image: cimg/openjdk:11.0
     steps:
       - add_ssh_keys:
           fingerprints:
