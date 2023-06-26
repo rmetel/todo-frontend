@@ -16,10 +16,10 @@ jobs:
     # See: https://circleci.com/docs/configuration-reference/#steps
     steps:
       # Checkout the code as the first step.
-      - checkout
+      # - checkout
 
       # Install Docker
-      - setup_remote_docker
+    #- setup_remote_docker
 
       #      - restore_cache:
       #          keys:
@@ -54,10 +54,8 @@ jobs:
     docker:
       - image: cimg/node:16.20.1
     steps:
-      # Access shared data
-      #- attach_workspace:
-      #    # Must be absolute path or relative path from working_directory
-      #    at: .
+      # Checkout the code as the first step.
+      - checkout
 
       # Install Docker
       - setup_remote_docker
