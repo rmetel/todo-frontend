@@ -85,7 +85,7 @@ jobs:
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
-  Maven Build: # This is the name of the workflow, feel free to change it to better match your workflow.
+  Node Build: # This is the name of the workflow, feel free to change it to better match your workflow.
     # Inside the workflow, you define the jobs you want to run.
     jobs:
       - build
