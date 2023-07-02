@@ -141,7 +141,7 @@ const Tasks: React.FC<TasksProps> = ({ apiUrl }) => {
             <Row>
                 <Col className={"col-lg-8 offset-lg-2"}>
                     <div className={"text-center mb-4"}>
-                        <h1>ToDo List</h1>
+                        <h1>ToDo List v.1.3.33</h1>
                     </div>
                     <InputGroup className="mb-3">
                         <Form.Control
