@@ -21,7 +21,7 @@ interface TaskViewProps {
     taskId: number;
 }
 
-const TaskView: React.FC<TaskViewProps> = ({ apiUrl, taskId }) => {
+export const TaskView: React.FC<TaskViewProps> = ({ apiUrl, taskId }) => {
     const [task, setTask] = useState({id: "", description: "", done: false});
     const [isLoaded, setIsLoaded] = useState(false);
     const [isError, setIsError] = useState(false);
