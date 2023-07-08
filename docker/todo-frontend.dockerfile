@@ -16,7 +16,7 @@ EXPOSE 3000
 ENTRYPOINT ["npm","start"]
 
 # terminal
-# docker build -t todo-frontend -f todo-frontend.dockerfile .
+# docker build -t todo-frontend -f docker/todo-frontend.dockerfile .
 # docker run --name todo-frontend -dp 3000:3000 todo-frontend
 
 # docker hub
