@@ -4,6 +4,7 @@ import { Container } from "react-bootstrap";
 import axios, { AxiosError } from "axios";
 import iziToast from "izitoast";
 import { Task } from '../../models/Task';
+import { TaskDetails } from "../../components/TaskDetails/TaskDetails";
 
 interface TaskViewProps {
     apiUrl: string;
@@ -15,11 +16,11 @@ export const TaskView: React.FC<TaskViewProps> = ({ apiUrl }) => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [isError, setIsError] = useState(false);
 
-    const onChangeHandler = (e: any) => {
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTask({ ...task, description: e.target.value });
     }
 
-    const saveChanges: React.MouseEventHandler<HTMLButtonElement> = (e: any) => {
+    const onSave: React.MouseEventHandler<HTMLButtonElement> = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         updateTask(task);
     }
@@ -71,47 +72,21 @@ export const TaskView: React.FC<TaskViewProps> = ({ apiUrl }) => {
             });
     }, [apiUrl, taskId])
 
-    return isLoaded ?
-        (
-            <Container className="mt-5">
-                <div className="row d-flex justify-content-center">
-                    <div className="col-md-8 mb-3">
-                        <NavLink to="/" className="text-dark">
-                            <i className="bi-arrow-left"></i>&nbsp;Zurück</NavLink>
-                    </div>
-                    <div className="col-md-8">
-                        <div className="card mb-10">
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <div className="product p-4">
-                                        <form>
-                                            <div className="form-group mb-4">
-                                                <input type="text"
-                                                       className="form-control"
-                                                       placeholder="Enter task name"
-                                                       value={task.description}
-                                                       onChange={onChangeHandler}
-                                                />
-                                            </div>
-                                            <button type="submit" className="btn btn-primary"
-                                                    onClick={saveChanges}>Save
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </Container>
-        ) :
-        (
-            <Container className="mt-5">
-                <div className="row d-flex justify-content-center">
+    return (
+        <Container className="mt-5">
+            <div className="row d-flex justify-content-center">
+                {isLoaded ?
+                    <TaskDetails
+                        task={task}
+                        onChange={onChange}
+                        onSave={onSave}
+                    />
+                    :
                     <div className="col-md-10 mb-3">
                         Lädt...
                     </div>
-                </div>
-            </Container>
-        );
+                }
+            </div>
+        </Container>
+    );
 }
