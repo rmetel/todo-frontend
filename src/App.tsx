@@ -3,8 +3,8 @@ import './App.css';
 import {Badge} from "react-bootstrap";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Tasks from './components/Tasks';
-import TaskDetails from './components/TaskDetails';
 import "izitoast/dist/js/iziToast.min";
+import { TaskView } from './views';
 
 const App = () => {
     const [api, setApi] = useState({version: ""});
@@ -31,7 +31,7 @@ const App = () => {
             <Router>
                 <Routes>
                     <Route path="/" element={<Tasks apiUrl={getApiUrl()}/>}/>
-                    <Route path="/tasks/:taskId" element={<TaskDetails apiUrl={getApiUrl()}/>}/>
+                    <Route path="/tasks/:taskId" element={<TaskView apiUrl={getApiUrl()}/>}/>
                 </Routes>
             </Router>
             <h6 id={"apiVersion"}>

@@ -3,31 +3,20 @@ import { NavLink, useParams } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import axios, { AxiosError } from "axios";
 import iziToast from "izitoast";
-import { Task } from '../models/Task';
-
-interface TaskDetailsProps {
-    apiUrl: string;
-}
-
-const TaskDetails: React.FC<TaskDetailsProps> = ({ apiUrl }) => {
-    const { taskId }: any = useParams();
-    return (
-        <TaskView apiUrl={apiUrl} taskId={taskId}/>
-    );
-}
+import { Task } from '../../models/Task';
 
 interface TaskViewProps {
     apiUrl: string;
-    taskId: number;
 }
 
-export const TaskView: React.FC<TaskViewProps> = ({ apiUrl, taskId }) => {
-    const [task, setTask] = useState({id: "", description: "", done: false});
+export const TaskView: React.FC<TaskViewProps> = ({ apiUrl }) => {
+    const { taskId } = useParams();
+    const [task, setTask] = useState({ id: "", description: "", done: false });
     const [isLoaded, setIsLoaded] = useState(false);
     const [isError, setIsError] = useState(false);
 
     const onChangeHandler = (e: any) => {
-        setTask({...task, description: e.target.value});
+        setTask({ ...task, description: e.target.value });
     }
 
     const saveChanges: React.MouseEventHandler<HTMLButtonElement> = (e: any) => {
@@ -83,46 +72,46 @@ export const TaskView: React.FC<TaskViewProps> = ({ apiUrl, taskId }) => {
     }, [apiUrl, taskId])
 
     return isLoaded ?
-    (
-        <Container className="mt-5">
-            <div className="row d-flex justify-content-center">
-                <div className="col-md-8 mb-3">
-                    <NavLink to="/" className="text-dark">
-                    <i className="bi-arrow-left"></i>&nbsp;Zurück</NavLink>
-                </div>
-                <div className="col-md-8">
-                    <div className="card mb-10">
-                        <div className="row">
-                            <div className="col-md-12">
-                                <div className="product p-4">
-                                    <form>
-                                      <div className="form-group mb-4">
-                                        <input  type="text"
-                                                className="form-control"
-                                                placeholder="Enter task name"
-                                                value={task.description}
-                                                onChange={onChangeHandler}
-                                        />
-                                      </div>
-                                      <button type="submit" className="btn btn-primary" onClick={saveChanges}>Save</button>
-                                    </form>
+        (
+            <Container className="mt-5">
+                <div className="row d-flex justify-content-center">
+                    <div className="col-md-8 mb-3">
+                        <NavLink to="/" className="text-dark">
+                            <i className="bi-arrow-left"></i>&nbsp;Zurück</NavLink>
+                    </div>
+                    <div className="col-md-8">
+                        <div className="card mb-10">
+                            <div className="row">
+                                <div className="col-md-12">
+                                    <div className="product p-4">
+                                        <form>
+                                            <div className="form-group mb-4">
+                                                <input type="text"
+                                                       className="form-control"
+                                                       placeholder="Enter task name"
+                                                       value={task.description}
+                                                       onChange={onChangeHandler}
+                                                />
+                                            </div>
+                                            <button type="submit" className="btn btn-primary"
+                                                    onClick={saveChanges}>Save
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </Container>
-    ) :
-    (
-        <Container className="mt-5">
-            <div className="row d-flex justify-content-center">
-                <div className="col-md-10 mb-3">
-                    Lädt...
+            </Container>
+        ) :
+        (
+            <Container className="mt-5">
+                <div className="row d-flex justify-content-center">
+                    <div className="col-md-10 mb-3">
+                        Lädt...
+                    </div>
                 </div>
-            </div>
-        </Container>
-    );
+            </Container>
+        );
 }
-
-export default TaskDetails;
