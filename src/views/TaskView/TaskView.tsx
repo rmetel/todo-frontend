@@ -41,10 +41,12 @@ export const TaskView: React.FC<TaskViewProps> = ({ apiUrl }) => {
   }
 
   useEffect(() => {
+    setIsLoading(true);
+
     fetch(apiUrl + "/tasks/" + taskId)
       .then(response => response.json())
       .then((task) => {
-        setIsLoading(true);
+        setIsLoading(false);
         setTask(task);
       });
   }, [apiUrl, taskId])
