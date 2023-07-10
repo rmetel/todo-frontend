@@ -8,6 +8,13 @@
     "strict": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": "src",
+    "paths": {
+      "helpers": [
+        "./helpers"
+      ]
+      // This mapping is relative to "baseUrl"
+    }
   }
 }
