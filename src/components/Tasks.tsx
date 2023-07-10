@@ -17,6 +17,7 @@ const Tasks: React.FC<TasksProps> = ({ apiUrl }) => {
 
     useEffect(() => {
         getTasks();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const getTasks = () => {

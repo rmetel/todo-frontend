@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
 import { Container } from "react-bootstrap";
-import axios, { AxiosError } from "axios";
-import iziToast from "izitoast";
+import axios from "axios";
 import { Task } from '../../models/Task';
 import { TaskDetails } from "../../components/TaskDetails/TaskDetails";
+import { showToast } from "helpers";
 
 interface TaskViewProps {
   apiUrl: string;
@@ -13,8 +13,7 @@ interface TaskViewProps {
 export const TaskView: React.FC<TaskViewProps> = ({ apiUrl }) => {
   const { taskId } = useParams();
   const [task, setTask] = useState({ id: "", description: "", done: false });
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTask({ ...task, description: e.target.value });
@@ -34,40 +33,18 @@ export const TaskView: React.FC<TaskViewProps> = ({ apiUrl }) => {
 
     axios.put(apiUrl + "/tasks/" + task.id, params)
       .then(function (response) {
-        if (response.status === 200) {
-          iziToast.show({
-            theme: 'dark',
-            icon: 'icon-person',
-            title: `Task "${task.description}" wurde aktualisiert!`,
-            position: 'bottomCenter', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
-            progressBarColor: 'rgb(0, 255, 184)',
-            timeout: 3000
-          });
-        }
+        showToast(`Task "${task.description}" wurde aktualisiert!`, 'success');
       })
       .catch(function (error) {
-        setIsError(true);
-        showError(error);
+        showToast(`${error.name}: ${error.message}`, 'error');
       });
-
-  }
-
-  const showError = (error: AxiosError) => {
-    iziToast.show({
-      theme: 'dark',
-      icon: 'icon-person',
-      title: `${error.name}: ${error.message}`,
-      position: 'bottomCenter', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
-      progressBarColor: 'rgb(241,81,86)',
-      timeout: 5000
-    });
   }
 
   useEffect(() => {
     fetch(apiUrl + "/tasks/" + taskId)
       .then(response => response.json())
       .then((task) => {
-        setIsLoaded(true);
+        setIsLoading(true);
         setTask(task);
       });
   }, [apiUrl, taskId])
@@ -75,16 +52,16 @@ export const TaskView: React.FC<TaskViewProps> = ({ apiUrl }) => {
   return (
     <Container className="mt-5">
       <div className="row d-flex justify-content-center">
-        {isLoaded ?
+        {isLoading ?
+          <div className="col-md-10 mb-3">
+            Lädt...
+          </div>
+          :
           <TaskDetails
             task={task}
             onChange={onChange}
             onSave={onSave}
           />
-          :
-          <div className="col-md-10 mb-3">
-            Lädt...
-          </div>
         }
       </div>
     </Container>

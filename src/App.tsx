@@ -11,6 +11,7 @@ const App = () => {
 
   useEffect(() => {
     getApiVersion();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getApiUrl = () => {
