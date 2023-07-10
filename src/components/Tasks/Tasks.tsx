@@ -3,17 +3,16 @@ import { Button, CloseButton, Col, Container, Form, InputGroup, ListGroup, Row }
 import { Link } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import iziToast from "izitoast";
-import { Task } from '../models/Task';
+import { Task } from '../../models/Task';
+import { getApiUrl } from "helpers";
 
-interface TasksProps {
-    apiUrl: string;
-}
-
-const Tasks: React.FC<TasksProps> = ({ apiUrl }) => {
+export const Tasks: React.FC = () => {
     const [isLoaded, setLoaded] = useState(false);
     const [isError, setIsError] = useState(false);
     const [taskName, setTaskName] = useState("");
     const [tasks, setTasks] = useState<Task[]>([]);
+
+    const apiUrl = getApiUrl();
 
     useEffect(() => {
         getTasks();
@@ -22,8 +21,8 @@ const Tasks: React.FC<TasksProps> = ({ apiUrl }) => {
 
     const getTasks = () => {
         fetch(apiUrl + "/tasks")
-            .then(response => response.json())
-            .then((tasks) => {
+          .then(response => response.json())
+          .then((tasks) => {
                 setLoaded(true);
                 setTasks(tasks);
             })
@@ -192,5 +191,3 @@ const Tasks: React.FC<TasksProps> = ({ apiUrl }) => {
         </Container>
     )
 }
-
-export default Tasks;

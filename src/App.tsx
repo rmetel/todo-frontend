@@ -1,38 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import './App.css';
 import { Badge } from "react-bootstrap";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Tasks from './components/Tasks';
 import "izitoast/dist/js/iziToast.min";
-import { TaskView } from './views';
+import { Tasks } from 'components';
+import { useApi } from "hooks";
+import { TaskView } from 'views';
 
 const App = () => {
-  const [api, setApi] = useState({ version: "" });
-
-  useEffect(() => {
-    getApiVersion();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const getApiUrl = () => {
-    let isLocal = window.location.href.indexOf("localhost") > -1;
-    let localHost = "http://localhost:5000";
-    let apiEndpoint = "/api";
-    return isLocal ? localHost + apiEndpoint : apiEndpoint;
-  }
-
-  const getApiVersion = () => {
-    fetch(getApiUrl() + "/version")
-      .then(response => response.json())
-      .then(api => setApi(api));
-  }
+  const api = useApi();
 
   return (
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/" element={<Tasks apiUrl={getApiUrl()}/>}/>
-          <Route path="/tasks/:taskId" element={<TaskView apiUrl={getApiUrl()}/>}/>
+          <Route path="/" element={<Tasks/>}/>
+          <Route path="/tasks/:taskId" element={<TaskView/>}/>
         </Routes>
       </Router>
       <h6 id={"apiVersion"}>

@@ -23,3 +23,10 @@ export const showToast = (message: string, type: 'success' | 'error') => {
     timeout: 3000
   });
 }
+
+export const getApiUrl = () => {
+  let isLocal = window.location.href.indexOf("localhost") > -1;
+  let localHost = "http://localhost:5000";
+  let apiEndpoint = "/api";
+  return isLocal ? localHost + apiEndpoint : apiEndpoint;
+}

@@ -9,12 +9,23 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": "src",
+    "baseUrl": "./src",
     "paths": {
+      "components": [
+        "./components"
+      ],
       "helpers": [
         "./helpers"
+      ],
+      "hooks": [
+        "./hooks"
+      ],
+      "models": [
+        "./models"
+      ],
+      "views": [
+        "./views"
       ]
-      // This mapping is relative to "baseUrl"
     }
   }
 }

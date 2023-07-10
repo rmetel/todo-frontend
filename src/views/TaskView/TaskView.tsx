@@ -2,18 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import axios from "axios";
-import { Task } from '../../models/Task';
-import { TaskDetails } from "../../components/TaskDetails/TaskDetails";
-import { showToast } from "helpers";
+import { TaskDetails } from "components";
+import { getApiUrl, showToast } from "helpers";
+import { Task } from 'models/Task';
 
-interface TaskViewProps {
-  apiUrl: string;
-}
-
-export const TaskView: React.FC<TaskViewProps> = ({ apiUrl }) => {
+export const TaskView: React.FC = () => {
   const { taskId } = useParams();
   const [task, setTask] = useState({ id: "", description: "", done: false });
   const [isLoading, setIsLoading] = useState(false);
+
+  const apiUrl = getApiUrl();
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTask({ ...task, description: e.target.value });
