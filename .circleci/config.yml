@@ -49,6 +49,9 @@ jobs:
 workflows:
   Node Build:
     jobs:
+      - build-push:
+          context:
+            - build-context
       - deploy:
           context:
             - build-context
