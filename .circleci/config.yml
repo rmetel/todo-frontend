@@ -14,9 +14,9 @@ jobs:
       #- run:
       #    name: Create SSH folder
       #    command: mkdir -p ~/.ssh
-      #- run:
-      #    name: Add known host
-      #    command: ssh-keyscan $SSH_HOST >> ~/.ssh/known_hosts
+      - run:
+          name: Add known host
+          command: ssh-keyscan $SSH_HOST >> ~/.ssh/known_hosts
       - run:
           name: Deploy over SSH
           command: |
