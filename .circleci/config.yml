@@ -10,20 +10,19 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "2b:a4:ba:38:78:e6:13:5e:53:bc:8e:8b:59:3a:c0:fe"
+            - "c1:b0:02:b6:9d:26:29:a6:8c:74:0e:eb:12:1a:f6:f4"
       - run:
           name: Create SSH folder
           command: mkdir -p ~/.ssh
       - run:
           name: Add known host
           command: ssh-keyscan $SSH_HOST >> ~/.ssh/known_hosts
-      - run: less ~/.ssh/known_hosts
       - run:
           name: Deploy over SSH
           command: ssh $SSH_USER@$SSH_HOST 'cd ~/logs && touch ssh-todo-frontend-$(date +"%Y-%m-%d_%H-%M-%S").log'
 
 workflows:
-  node-build:
+  frontend:
     jobs:
       - deploy:
           context:
