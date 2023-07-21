@@ -6,7 +6,7 @@ orbs:
 jobs:
   test:
     docker:
-      - image: cimg/node:$NODE_VERSION
+      - image: cimg/node:18.7.0
     steps:
       # Save build number
       - run: BUILD_COUNTER="${CIRCLE_BUILD_NUM}"
