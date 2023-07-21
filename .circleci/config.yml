@@ -11,16 +11,13 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "2b:a4:ba:38:78:e6:13:5e:53:bc:8e:8b:59:3a:c0:fe"
-      #- run:
-      #    name: Create SSH folder
-      #    command: mkdir -p ~/.ssh
       - run:
           name: Add known host
           command: ssh-keyscan $SSH_HOST >> ~/.ssh/known_hosts
       - run:
           name: Deploy over SSH
           command: |
-            ssh root@212.227.201.99 touch todo-frontend-$(date +"%Y-%m-%d_%H-%M-%S").log && exit
+            ssh root@212.227.201.99 'cd ~/logs && touch todo-frontend-$(date +"%Y-%m-%d_%H-%M-%S").log && exit'
 
 workflows:
   Node Build:
