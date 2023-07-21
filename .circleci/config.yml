@@ -10,7 +10,7 @@ jobs:
     steps:
       # Save build number
       - run: BUILD_COUNTER="${CIRCLE_BUILD_NUM}"
-      - run: echo ${BUILD_COUNTER}
+      - run: echo $BUILD_COUNTER
   build-push:
     docker:
       - image: cimg/node:$NODE_VERSION
