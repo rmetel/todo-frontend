@@ -1,7 +1,7 @@
 version: 2.1
 
-orbs:
-  docker: circleci/docker@2.2.0
+#orbs:
+#  docker: circleci/docker@2.2.0
 
 jobs:
   deploy:
@@ -10,7 +10,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "c1:b0:02:b6:9d:26:29:a6:8c:74:0e:eb:12:1a:f6:f4"
+            - "2b:a4:ba:38:78:e6:13:5e:53:bc:8e:8b:59:3a:c0:fe"
       #- run:
       #    name: Create SSH folder
       #    command: mkdir -p ~/.ssh
@@ -20,10 +20,10 @@ jobs:
       - run:
           name: Deploy over SSH
           command: |
-            ssh $SSH_USER@$SSH_HOST touch todo-frontend-$(date +"%Y-%m-%d_%H-%M-%S").log && exit
+            ssh root@212.227.201.99 touch todo-frontend-$(date +"%Y-%m-%d_%H-%M-%S").log && exit
 
 workflows:
-  node-build:
+  nodejs:
     jobs:
       - deploy:
           context:
