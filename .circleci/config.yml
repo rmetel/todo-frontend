@@ -6,7 +6,7 @@ orbs:
 jobs:
   deploy:
     machine: # executor type
-      image: ubuntu-latest
+      image: ubuntu-2004:2022.07.1
     steps:
       - add_ssh_keys:
           fingerprints:
