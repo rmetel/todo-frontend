@@ -19,6 +19,13 @@ jobs:
       # Install Docker
       - setup_remote_docker
 
+      # Set build number
+      - run:
+          name: Set build number
+          command: export BUILD_NUMBER="<< pipeline.number >>"
+
+      - run: echo $BUILD_NUMBER
+
       # Login into Docker Hub
       - run:
           name: Docker login
@@ -54,12 +61,12 @@ jobs:
 workflows:
   build-push-deploy:
     jobs:
-      - test
-#      - build-push:
-#          context:
-#            - build-context
-#      - deploy:
-#          context:
-#            - build-context
-#          requires:
-#            - build-push
+      #      - test
+      - build-push:
+          context:
+            - build-context
+      - deploy:
+          context:
+            - build-context
+          requires:
+            - build-push
