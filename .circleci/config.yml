@@ -26,6 +26,6 @@ workflows:
     jobs:
       - deploy:
           context:
-            - build-context
+            - build-contexts
 #          requires:
 #            - docker-push
