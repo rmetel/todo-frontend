@@ -4,13 +4,6 @@ orbs:
   docker: circleci/docker@2.2.0
 
 jobs:
-  test:
-    docker:
-      - image: cimg/node:18.7.0
-    steps:
-      # Save build number
-      - run: BUILD_COUNTER=${CIRCLE_BUILD_NUM}
-      - run: echo $BUILD_COUNTER
   build-push:
     docker:
       - image: cimg/node:$NODE_VERSION
@@ -32,12 +25,12 @@ jobs:
           path: ./docker
           dockerfile: todo-frontend.dockerfile
           image: ddrram/todo-frontend
-          tag: 1.3.$CIRCLE_BUILD_NUM
+          tag: 1.3.$CIRCLE_WORKFLOW_ID
 
       # Push Docker image
       - docker/push:
           image: ddrram/todo-frontend
-          tag: 1.3.$CIRCLE_BUILD_NUM
+          tag: 1.3.$CIRCLE_WORKFLOW_ID
   deploy:
     docker:
       - image: cimg/node:$NODE_VERSION
@@ -51,17 +44,16 @@ jobs:
       - run:
           name: Deploy over SSH
           command: |
-            ssh $SSH_USER@$SSH_HOST "echo 1.3.$CIRCLE_BUILD_NUM > ~/logs/todo-frontend.log && exit"
+            ssh $SSH_USER@$SSH_HOST "echo 1.3.$CIRCLE_WORKFLOW_ID > ~/logs/todo-frontend.log && exit"
 
 workflows:
   build-push-deploy:
     jobs:
-      - test
-#      - build-push:
-#          context:
-#            - build-context
-#      - deploy:
-#          context:
-#            - build-context
-#          requires:
-#            - build-push
+      - build-push:
+          context:
+            - build-context
+      - deploy:
+          context:
+            - build-context
+          requires:
+            - build-push
