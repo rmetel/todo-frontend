@@ -9,7 +9,7 @@ jobs:
       - image: cimg/node:18.7.0
     steps:
       # Save build number
-      - run: BUILD_COUNTER="${CIRCLE_BUILD_NUM}"
+      - run: BUILD_COUNTER=${CIRCLE_BUILD_NUM}
       - run: echo $BUILD_COUNTER
   build-push:
     docker:
