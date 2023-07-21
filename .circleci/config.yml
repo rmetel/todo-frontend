@@ -12,6 +12,8 @@ jobs:
   build-push:
     docker:
       - image: cimg/node:$NODE_VERSION
+    environment:
+      BUILD_NUMBER: << pipeline.number >>
     steps:
       # Checkout the code as the first step.
       - checkout
@@ -19,12 +21,10 @@ jobs:
       # Install Docker
       - setup_remote_docker
 
-      # Set build number
+      # Echo build number
       - run:
-          name: Set build number
-          command: export BUILD_NUMBER="<< pipeline.number >>"
-
-      - run: echo $BUILD_NUMBER
+          name: Echo build number
+          command: echo $BUILD_NUMBER
 
       # Login into Docker Hub
       - run:
