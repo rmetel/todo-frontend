@@ -8,7 +8,7 @@ jobs:
     docker:
       - image: cimg/node:18.7.0
     steps:
-      - run: echo "This is pipeline ID << pipeline.number >>"
+      - run: echo "This is pipeline number << pipeline.number >>"
   build-push:
     docker:
       - image: cimg/node:$NODE_VERSION
