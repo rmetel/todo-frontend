@@ -4,6 +4,13 @@ orbs:
   docker: circleci/docker@2.2.0
 
 jobs:
+  test:
+    docker:
+      - image: cimg/node:$NODE_VERSION
+    steps:
+      # Save build number
+      - run: BUILD_COUNTER="${CIRCLE_BUILD_NUM}"
+      - run: echo ${BUILD_COUNTER}
   build-push:
     docker:
       - image: cimg/node:$NODE_VERSION
@@ -49,11 +56,12 @@ jobs:
 workflows:
   build-push-deploy:
     jobs:
-      - build-push:
-          context:
-            - build-context
-      - deploy:
-          context:
-            - build-context
-          requires:
-            - build-push
+      - test
+#      - build-push:
+#          context:
+#            - build-context
+#      - deploy:
+#          context:
+#            - build-context
+#          requires:
+#            - build-push
