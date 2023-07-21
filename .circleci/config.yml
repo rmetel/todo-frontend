@@ -94,18 +94,12 @@ jobs:
       - run:
           name: Deploy over SSH
           command: ssh $SSH_USER@$SSH_HOST 'cd ~/logs && touch ssh-todo-frontend-$(date +"%Y-%m-%d_%H-%M-%S").log'
-  output:
-    docker:
-      - image: cimg/openjdk:11.0
-    steps:
-      - run: echo "hi :)"
 
 workflows:
   node-build:
     jobs:
-      - output
-      #- deploy:
-      #    context:
-      #      - build-context
-      #    requires:
-      #      - docker-push
+      - deploy:
+          context:
+            - build-context
+#          requires:
+#            - docker-push
