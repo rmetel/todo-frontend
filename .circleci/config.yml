@@ -98,7 +98,7 @@ jobs:
     docker:
       - image: cimg/openjdk:11.0
     steps:
-      - run: echo hi :)
+      - run: echo "hi :)"
 
 workflows:
   node-build:
