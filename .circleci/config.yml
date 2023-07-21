@@ -5,21 +5,22 @@ orbs:
 
 jobs:
   deploy:
-    docker:
-      - image: cimg/node:18.17.0
+    machine: # executor type
+      image: ubuntu-latest
     steps:
       - add_ssh_keys:
           fingerprints:
             - "c1:b0:02:b6:9d:26:29:a6:8c:74:0e:eb:12:1a:f6:f4"
-      - run:
-          name: Create SSH folder
-          command: mkdir -p ~/.ssh
-      - run:
-          name: Add known host
-          command: ssh-keyscan $SSH_HOST >> ~/.ssh/known_hosts
+      #- run:
+      #    name: Create SSH folder
+      #    command: mkdir -p ~/.ssh
+      #- run:
+      #    name: Add known host
+      #    command: ssh-keyscan $SSH_HOST >> ~/.ssh/known_hosts
       - run:
           name: Deploy over SSH
-          command: ssh $SSH_USER@$SSH_HOST "cd ~/logs && touch ssh-todo-frontend-$(date +"%Y-%m-%d_%H-%M-%S").log"
+          command: |
+            ssh $SSH_USER@$SSH_HOST "cd ~/logs && touch ssh-todo-frontend-$(date +"%Y-%m-%d_%H-%M-%S").log"
 
 workflows:
   react-frontend:
