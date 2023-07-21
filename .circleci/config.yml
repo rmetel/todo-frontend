@@ -93,26 +93,19 @@ jobs:
           command: ssh-keyscan $SSH_HOST >> ~/.ssh/known_hosts
       - run:
           name: Deploy over SSH
-          #command: ssh $SSH_USER@$SSH_HOST -f 'cd ~/logs && touch ssh-todo-frontend-$(date +"%Y-%m-%d_%H-%M-%S").log && cd ~/git/todo-backend && git pull && docker-compose -f docker/docker-compose-prod.yaml up -d && exit'
           command: ssh $SSH_USER@$SSH_HOST 'cd ~/logs && touch ssh-todo-frontend-$(date +"%Y-%m-%d_%H-%M-%S").log'
+  output:
+    docker:
+      - image: cimg/openjdk:11.0
+    steps:
+      - run: echo hi :)
 
-# Invoke jobs via workflows
-# See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
-  Node Build: # This is the name of the workflow, feel free to change it to better match your workflow.
-    # Inside the workflow, you define the jobs you want to run.
+  node-build:
     jobs:
-      #      - build
-      - docker-push:
-          context:
-            - build-context
-      #          requires:
-      #            - build
-      #          filters:
-      #            branches:
-      #              only: master
-      - deploy:
-          context:
-            - build-context
-          requires:
-            - docker-push
+      - output
+      #- deploy:
+      #    context:
+      #      - build-context
+      #    requires:
+      #      - docker-push
