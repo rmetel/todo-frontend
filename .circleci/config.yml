@@ -19,10 +19,10 @@ jobs:
           command: ssh-keyscan $SSH_HOST >> ~/.ssh/known_hosts
       - run:
           name: Deploy over SSH
-          command: ssh $SSH_USER@$SSH_HOST 'cd ~/logs && touch ssh-todo-frontend-$(date +"%Y-%m-%d_%H-%M-%S").log'
+          command: ssh $SSH_USER@$SSH_HOST "cd ~/logs && touch ssh-todo-frontend-$(date +"%Y-%m-%d_%H-%M-%S").log"
 
 workflows:
-  frontend:
+  react-frontend:
     jobs:
       - deploy:
           context:
