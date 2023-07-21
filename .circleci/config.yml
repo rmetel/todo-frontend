@@ -4,11 +4,6 @@ orbs:
   docker: circleci/docker@2.2.0
 
 jobs:
-  test:
-    docker:
-      - image: cimg/node:18.7.0
-    steps:
-      - run: echo "This is pipeline number << pipeline.number >>"
   build-push:
     docker:
       - image: cimg/node:$NODE_VERSION
@@ -63,7 +58,6 @@ jobs:
 workflows:
   build-push-deploy:
     jobs:
-      #      - test
       - build-push:
           context:
             - build-context
