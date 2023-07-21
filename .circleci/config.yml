@@ -44,7 +44,9 @@ jobs:
     environment:
       BUILD_NUMBER: << pipeline.number >>
     steps:
-      - run: echo timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
+      - run:
+          name: Timestamp
+          command: echo timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
       - add_ssh_keys:
           fingerprints:
             - "2b:a4:ba:38:78:e6:13:5e:53:bc:8e:8b:59:3a:c0:fe"
