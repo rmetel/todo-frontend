@@ -20,10 +20,10 @@ jobs:
       - run:
           name: Deploy over SSH
           command: |
-            ssh $SSH_USER@$SSH_HOST -f "touch todo-frontend-$(date +"%Y-%m-%d_%H-%M-%S").log && exit"
+            ssh $SSH_USER@$SSH_HOST touch todo-frontend-$(date +"%Y-%m-%d_%H-%M-%S").log && exit
 
 workflows:
-  react-frontend:
+  node-build:
     jobs:
       - deploy:
           context:
