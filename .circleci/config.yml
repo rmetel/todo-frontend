@@ -17,7 +17,7 @@ jobs:
       - run:
           name: Deploy over SSH
           command: |
-            ssh $SSH_HOST@212.227.201.99 'cd ~/logs && touch todo-frontend-$(date +"%Y-%m-%d_%H-%M-%S").log && exit'
+            ssh $SSH_USER@$SSH_HOST 'cd ~/logs && touch todo-frontend-$(date +"%Y-%m-%d_%H-%M-%S").log && exit'
 
 workflows:
   Node Build:
