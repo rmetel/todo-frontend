@@ -5,8 +5,8 @@ version: 2.1
 
 jobs:
   deploy:
-    machine: # executor type
-      image: ubuntu-2004:2022.07.1
+    docker:
+      - image: cimg/node:18.17.0
     steps:
       - add_ssh_keys:
           fingerprints:
@@ -23,7 +23,7 @@ jobs:
             ssh root@212.227.201.99 touch todo-frontend-$(date +"%Y-%m-%d_%H-%M-%S").log && exit
 
 workflows:
-  nodejs:
+  Node Build:
     jobs:
       - deploy:
           context:
