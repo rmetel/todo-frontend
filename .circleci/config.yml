@@ -17,6 +17,7 @@ jobs:
       - run:
           name: Add known host
           command: ssh-keyscan $SSH_HOST >> ~/.ssh/known_hosts
+      - run: less ~/.ssh/known_hosts
       - run:
           name: Deploy over SSH
           command: ssh $SSH_USER@$SSH_HOST 'cd ~/logs && touch ssh-todo-frontend-$(date +"%Y-%m-%d_%H-%M-%S").log'
@@ -26,6 +27,6 @@ workflows:
     jobs:
       - deploy:
           context:
-            - build-contexts
+            - build-context
 #          requires:
 #            - docker-push
