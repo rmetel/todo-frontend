@@ -1,26 +1,46 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import './App.css';
-import { Badge } from "react-bootstrap";
+import { Badge, Col, Container, Row } from "react-bootstrap";
 import "izitoast/dist/js/iziToast.min";
 import { Tasks } from 'components';
 import { useApi } from "hooks";
 import { TaskView } from 'views';
+import { ReactKeycloakProvider } from "@react-keycloak/web";
+import keycloak from "./auth/keycloak";
+import { PrivateRoute } from "components";
 
 const App = () => {
   const api = useApi();
 
   return (
     <div className="App">
-      <Router>
-        <Routes>
-          <Route path="/" element={<Tasks/>}/>
-          <Route path="/tasks/:taskId" element={<TaskView/>}/>
-        </Routes>
-      </Router>
-      <h6 id={"apiVersion"}>
-        <Badge bg="secondary">v{api.version}</Badge>
-      </h6>
+      <Container className="mt-4">
+        <Row>
+          <Col className={"col-lg-8 offset-lg-2"}>
+            <ReactKeycloakProvider authClient={keycloak}>
+              <Router>
+                <Routes>
+                  <Route path="/" element={
+                    <PrivateRoute>
+                      <Tasks/>
+                    </PrivateRoute>
+                  }/>
+                  <Route path="/secure" element={
+                    <PrivateRoute>
+                      <h1>Private area...</h1>
+                    </PrivateRoute>
+                  }/>
+                  <Route path="/tasks/:taskId" element={<TaskView/>}/>
+                </Routes>
+              </Router>
+              <h6 id={"apiVersion"}>
+                <Badge bg="secondary">v{api.version}</Badge>
+              </h6>
+            </ReactKeycloakProvider>
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 }
