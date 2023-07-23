@@ -1,6 +1,5 @@
 import React from "react";
 import { useKeycloak } from "@react-keycloak/web";
-import { Col, Row } from "react-bootstrap";
 
 interface PrivateRouteProps {
   children: React.ReactElement | null;
