@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent, screen } from '@testing-library/react';
-import { TaskDetails } from "./TaskDetails";
+import { TaskDetails } from "components";
 import { Task } from "../../models/Task";
 import { renderWithProviders } from "helpers";
 
