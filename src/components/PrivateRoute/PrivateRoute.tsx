@@ -21,7 +21,7 @@ export const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
         justifyContent: "space-between",
         alignItems: "center"
       }}>
-        <div>This is a Keycloak-secured component of your application.</div>
+        <div>This is a Keycloak-secured area of the application.</div>
         <div>
           {isLoggedIn ?
             <button type="submit" className="btn btn-primary" onClick={() => keycloak.logout()}>
