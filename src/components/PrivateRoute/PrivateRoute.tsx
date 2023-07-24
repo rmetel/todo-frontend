@@ -13,15 +13,12 @@ export const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
   return (
     <>
       <div style={{
-        border: "1px solid #777",
-        borderRadius: 3,
-        padding: 10,
-        margin: "20px 0",
+        padding: "3em 0",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center"
       }}>
-        <div>This is a Keycloak-secured area of the application.</div>
+        <h3 className="mb-4">todo-app.tech</h3>
         <div>
           {isLoggedIn ?
             <button type="submit" className="btn btn-primary" onClick={() => keycloak.logout()}>

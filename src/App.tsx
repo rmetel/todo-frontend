@@ -26,11 +26,6 @@ const App = () => {
                       <Tasks/>
                     </PrivateRoute>
                   }/>
-                  <Route path="/secure" element={
-                    <PrivateRoute>
-                      <h1>Private area...</h1>
-                    </PrivateRoute>
-                  }/>
                   <Route path="/tasks/:taskId" element={<TaskView/>}/>
                 </Routes>
               </Router>
