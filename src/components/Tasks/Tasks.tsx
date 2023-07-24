@@ -3,7 +3,7 @@ import { Button, CloseButton, Col, Form, InputGroup, ListGroup, Row } from "reac
 import { Link } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import iziToast from "izitoast";
-import { Task } from '../../models/Task';
+import { Task } from '~/models/Task';
 import { getApiUrl } from "helpers";
 
 export const Tasks: React.FC = () => {
