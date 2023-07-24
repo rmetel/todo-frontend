@@ -1,5 +1,5 @@
-import React, { ChangeEvent, KeyboardEvent, useState, useEffect } from "react";
-import { Button, CloseButton, Col, Container, Form, InputGroup, ListGroup, Row } from "react-bootstrap";
+import React, { KeyboardEvent, useEffect, useState } from "react";
+import { Button, CloseButton, Col, Form, InputGroup, ListGroup, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import iziToast from "izitoast";
@@ -115,7 +115,7 @@ export const Tasks: React.FC = () => {
 
   }
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLFormElement>) => {
     setTaskName(e.target.value);
   }
 
@@ -160,10 +160,10 @@ export const Tasks: React.FC = () => {
           {tasks.map((task, index) =>
             <ListGroup.Item key={task.id} className={task.done ? "resolved" : ""}>
               <Row>
-                <Col xs={9} lg={10}>
-                  <span onClick={() => {
-                    updateTaskStatus(task)
-                  }}>
+                <Col xs={9} lg={10} style={{ cursor: "pointer" }} onClick={() => {
+                  updateTaskStatus(task)
+                }}>
+                  <span>
                       {task.done ?
                         <i className="bi-check-circle mr-2"/>
                         :

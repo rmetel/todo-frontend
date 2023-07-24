@@ -13,16 +13,7 @@ export const TaskView: React.FC = () => {
 
   const apiUrl = getApiUrl();
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTask({ ...task, description: e.target.value });
-  }
-
-  const onSave: React.MouseEventHandler<HTMLButtonElement> = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    updateTask(task);
-  }
-
-  const updateTask = (task: Task) => {
+  const saveTask = (task: Task) => {
     let params = {
       id: task.id,
       description: task.description,
@@ -59,8 +50,7 @@ export const TaskView: React.FC = () => {
           :
           <TaskDetails
             task={task}
-            onChange={onChange}
-            onSave={onSave}
+            saveTask={saveTask}
           />
         }
       </div>

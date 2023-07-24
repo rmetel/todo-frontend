@@ -13,16 +13,15 @@ const task: Task = {
 jest.spyOn(console, "error").mockImplementation(() => {
 });
 
-const onChange = jest.fn();
-const onSave = jest.fn();
+const saveTask = jest.fn();
+const handleSave = jest.fn();
 
 describe('<TaskDetails />', () => {
   it('should render task description, given a task', () => {
     renderWithProviders(
       <TaskDetails
         task={task}
-        onChange={onChange}
-        onSave={onSave}
+        saveTask={saveTask}
       />
     );
     expect(screen.getByRole("textbox")).toHaveValue("task");
@@ -32,8 +31,7 @@ describe('<TaskDetails />', () => {
     renderWithProviders(
       <TaskDetails
         task={task}
-        onChange={onChange}
-        onSave={onSave}
+        saveTask={saveTask}
       />
     );
 
@@ -41,15 +39,14 @@ describe('<TaskDetails />', () => {
     expect(saveButton).toBeInTheDocument();
 
     fireEvent.click(saveButton);
-    expect(onSave).toBeCalled();
+    expect(handleSave).toBeCalled();
   });
 
   it('should click back button', () => {
     renderWithProviders(
       <TaskDetails
         task={task}
-        onChange={onChange}
-        onSave={onSave}
+        saveTask={saveTask}
       />
     );
 
