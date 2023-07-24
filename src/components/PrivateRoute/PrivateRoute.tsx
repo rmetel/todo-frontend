@@ -18,7 +18,7 @@ export const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
         justifyContent: "space-between",
         alignItems: "center"
       }}>
-        <h3 className="mb-4">todo-app.tech</h3>
+        <h3>Private area, please login...</h3>
         <div>
           {isLoggedIn ?
             <button type="submit" className="btn btn-primary" onClick={() => keycloak.logout()}>

@@ -138,6 +138,9 @@ export const Tasks: React.FC = () => {
 
   return (
     <>
+      <div className={"text-center mb-4"}>
+        <h3>Todo-App</h3>
+      </div>
       <InputGroup className="mb-3">
         <Form.Control
           placeholder="New task"

@@ -26,7 +26,7 @@ const App = () => {
                   }/>
                   <Route path="/secure" element={
                     <PrivateRoute>
-                      <h1>Private area...</h1>
+                      <h2>Secured Page</h2>
                     </PrivateRoute>
                   }/>
                   <Route path="/tasks/:taskId" element={<TaskView/>}/>
