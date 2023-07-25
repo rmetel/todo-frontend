@@ -3,7 +3,12 @@ import { getApiUrl } from "helpers";
 import { Api } from "models/Api";
 
 export const useApi = (): Api => {
-  const [api, setApi] = useState<Api>({ version: "" });
+  const [api, setApi] = useState<Api>({
+    id: null,
+    branch: "",
+    version: "",
+    deployed: false
+  });
 
   useEffect(() => {
     fetch(getApiUrl() + "/version")
