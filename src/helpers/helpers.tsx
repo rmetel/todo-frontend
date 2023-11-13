@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import iziToast from "izitoast";
+import iziToast, { IziToastSettings } from "izitoast";
 
 export const debug = () => screen.debug(undefined, Infinity);
 
@@ -9,15 +9,14 @@ export const renderWithProviders = (children: React.ReactNode) => {
   render(<MemoryRouter>{children}</MemoryRouter>);
 };
 
-export const showToast = (message: string, type: "success" | "error") => {
-  iziToast.show({
-    theme: "dark",
-    icon: "icon-person",
-    title: message,
-    position: "bottomCenter", // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
-    progressBarColor: type === "error" ? "rgb(241,81,86)" : "rgb(0, 255, 184)",
-    timeout: 3000,
-  });
+export const toastSettings: IziToastSettings = {
+  theme: "dark",
+  icon: "icon-person",
+  position: "bottomCenter",
+  backgroundColor: "#4f4d4d",
+  color: "rgb(255, 255, 255)",
+  progressBarColor: "rgb(0, 255, 184)",
+  timeout: 3000
 };
 
 export const getApiUrl = () => {

@@ -3,8 +3,9 @@ import { useParams } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import axios from "axios";
 import { TaskDetails } from "components";
-import { getApiUrl, showToast } from "helpers";
+import { getApiUrl, toastSettings } from "helpers";
 import { Task } from "models/Task";
+import { immediateToast } from "izitoast-react";
 
 export const TaskView: React.FC = () => {
   const { taskId } = useParams();
@@ -23,10 +24,23 @@ export const TaskView: React.FC = () => {
     axios
       .put(apiUrl + "/tasks/" + task.id, params)
       .then(function (response) {
-        showToast(`Task "${task.description}" wurde aktualisiert!`, "success");
+        immediateToast(
+          "info",
+          {
+            ...toastSettings,
+            title: `Task "${task.description}" wurde aktualisiert!`
+          }
+        );
       })
       .catch(function (error) {
-        showToast(`${error.name}: ${error.message}`, "error");
+        immediateToast(
+          "info",
+          {
+            ...toastSettings,
+            progressBarColor: "rgb(241,81,86)",
+            title: `${error.name}: ${error.message}`
+          }
+        );
       });
   };
 
@@ -47,7 +61,7 @@ export const TaskView: React.FC = () => {
         {isLoading ? (
           <div className="col-md-10 mb-3">Lädt...</div>
         ) : (
-          <TaskDetails task={task} saveTask={saveTask}/>
+          <TaskDetails task={task} saveTask={saveTask} />
         )}
       </div>
     </Container>

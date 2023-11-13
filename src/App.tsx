@@ -2,13 +2,13 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { Badge, Col, Container, Row } from "react-bootstrap";
-import "izitoast/dist/js/iziToast.min";
 import { Tasks } from "components";
 import { useApi } from "hooks";
 import { TaskView } from "views";
 import { ReactKeycloakProvider } from "@react-keycloak/web";
 import keycloak from "./auth/keycloak";
 import { PrivateRoute } from "components";
+import "izitoast-react/dist/iziToast.css";
 
 const App = () => {
   const api = useApi();
@@ -21,7 +21,7 @@ const App = () => {
             <ReactKeycloakProvider authClient={keycloak}>
               <Router>
                 <Routes>
-                  <Route path="/" element={<Tasks/>}/>
+                  <Route path="/" element={<Tasks />} />
                   <Route
                     path="/secure"
                     element={
@@ -30,7 +30,7 @@ const App = () => {
                       </PrivateRoute>
                     }
                   />
-                  <Route path="/tasks/:taskId" element={<TaskView/>}/>
+                  <Route path="/tasks/:taskId" element={<TaskView />} />
                 </Routes>
               </Router>
               <h6 id={"apiVersion"}>

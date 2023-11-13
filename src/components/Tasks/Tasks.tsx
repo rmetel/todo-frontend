@@ -1,25 +1,16 @@
 import React, { KeyboardEvent, useEffect, useState } from "react";
-import {
-  Button,
-  CloseButton,
-  Col,
-  Form,
-  InputGroup,
-  ListGroup,
-  Row,
-} from "react-bootstrap";
+import { Button, CloseButton, Col, Form, InputGroup, ListGroup, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import axios, { AxiosError } from "axios";
-import iziToast from "izitoast";
+import axios from "axios";
 import { Task } from "~/models/Task";
-import { getApiUrl } from "helpers";
+import { getApiUrl, toastSettings } from "helpers";
+import { immediateToast } from "izitoast-react";
 
 export const Tasks: React.FC = () => {
   const [isLoaded, setLoaded] = useState(false);
   const [isError, setIsError] = useState(false);
   const [taskName, setTaskName] = useState("");
   const [tasks, setTasks] = useState<Task[]>([]);
-
   const apiUrl = getApiUrl();
 
   useEffect(() => {
@@ -37,15 +28,14 @@ export const Tasks: React.FC = () => {
       .catch((error) => {
         setIsError(true);
         setLoaded(false);
-
-        iziToast.show({
-          theme: "dark",
-          icon: "icon-person",
-          title: `${error.message}`,
-          position: "bottomCenter", // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
-          progressBarColor: "rgb(241,81,86)",
-          timeout: 3000,
-        });
+        immediateToast(
+          "info",
+          {
+            ...toastSettings,
+            progressBarColor: "rgb(241,81,86)",
+            title: error.message
+          }
+        );
       });
   };
 
@@ -56,43 +46,58 @@ export const Tasks: React.FC = () => {
 
     axios
       .post(apiUrl + "/tasks", { description: taskName })
-      .then(function (response) {
-        iziToast.show({
-          theme: "dark",
-          icon: "icon-person",
-          title: `Task "${taskName}" wurde erstellt!`,
-          position: "bottomCenter", // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
-          progressBarColor: "rgb(0, 255, 184)",
-          timeout: 3000,
-        });
-
-        setTaskName("");
-        getTasks();
+      .then(function(response) {
+        if (response.status === 200) {
+          immediateToast(
+            "info",
+            {
+              ...toastSettings,
+              title: `Task "${taskName}" wurde erstellt!`
+            }
+          );
+          setTaskName("");
+          getTasks();
+        }
       })
-      .catch(function (error) {
+      .catch((error) => {
         setIsError(true);
-        showError(error);
+        immediateToast(
+          "info",
+          {
+            ...toastSettings,
+            progressBarColor: "rgb(241,81,86)",
+            title: error.message
+          }
+        );
       });
   };
 
   const deleteTask = (task: Task) => {
     axios
       .delete(apiUrl + "/tasks/" + task.id)
-      .then(function (response) {
-        iziToast.show({
-          theme: "dark",
-          icon: "icon-person",
-          title: `Task "${task.description}" wurde gelöscht!`,
-          position: "bottomCenter", // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
-          progressBarColor: "rgb(241,81,86)",
-          timeout: 3000,
-        });
-
+      .then(function(response) {
+        if (response.status === 200) {
+          immediateToast(
+            "info",
+            {
+              ...toastSettings,
+              progressBarColor: "rgb(241,81,86)",
+              title: `Task "${task.description}" wurde gelöscht!`
+            }
+          );
+        }
         getTasks();
       })
-      .catch(function (error) {
+      .catch((error) => {
         setIsError(true);
-        showError(error);
+        immediateToast(
+          "info",
+          {
+            ...toastSettings,
+            progressBarColor: "rgb(241,81,86)",
+            title: error.message
+          }
+        );
       });
   };
 
@@ -100,28 +105,33 @@ export const Tasks: React.FC = () => {
     let params = {
       id: task.id,
       description: task.description,
-      done: !task.done,
+      done: !task.done
     };
 
     axios
       .put(apiUrl + "/tasks/" + task.id, params)
-      .then(function (response) {
+      .then(function(response) {
         if (response.status === 200) {
-          iziToast.show({
-            theme: "dark",
-            icon: "icon-person",
-            title: `Task "${task.description}" wurde aktualisiert!`,
-            position: "bottomCenter", // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
-            progressBarColor: "rgb(0, 255, 184)",
-            timeout: 3000,
-          });
-
+          immediateToast(
+            "info",
+            {
+              ...toastSettings,
+              title: `Task "${task.description}" wurde aktualisiert!`
+            }
+          );
           getTasks();
         }
       })
-      .catch(function (error) {
+      .catch((error) => {
         setIsError(true);
-        showError(error);
+        immediateToast(
+          "info",
+          {
+            ...toastSettings,
+            progressBarColor: "rgb(241,81,86)",
+            title: error.message
+          }
+        );
       });
   };
 
@@ -133,17 +143,6 @@ export const Tasks: React.FC = () => {
     if (e.code === "Enter") {
       addTask(taskName);
     }
-  };
-
-  const showError = (error: AxiosError) => {
-    iziToast.show({
-      theme: "dark",
-      icon: "icon-person",
-      title: `${error.name}: ${error.message}`,
-      position: "bottomCenter", // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
-      progressBarColor: "rgb(241,81,86)",
-      timeout: 5000,
-    });
   };
 
   return (
@@ -189,9 +188,9 @@ export const Tasks: React.FC = () => {
                 >
                   <span>
                     {task.done ? (
-                      <i className="bi-check-circle mr-2"/>
+                      <i className="bi-check-circle mr-2" />
                     ) : (
-                      <i className="bi-circle mr-2"/>
+                      <i className="bi-circle mr-2" />
                     )}
                   </span>
                   {index + 1}. {task.description}

@@ -18,12 +18,12 @@ const handleSave = jest.fn();
 
 describe("<TaskDetails />", () => {
   it("should render task description, given a task", () => {
-    renderWithProviders(<TaskDetails task={task} saveTask={saveTask}/>);
+    renderWithProviders(<TaskDetails task={task} saveTask={saveTask} />);
     expect(screen.getByRole("textbox")).toHaveValue("task");
   });
 
   it("should click save button", () => {
-    renderWithProviders(<TaskDetails task={task} saveTask={saveTask}/>);
+    renderWithProviders(<TaskDetails task={task} saveTask={saveTask} />);
 
     const saveButton = screen.getByRole("button", { name: "Save" });
     expect(saveButton).toBeInTheDocument();
@@ -33,7 +33,7 @@ describe("<TaskDetails />", () => {
   });
 
   it("should click back button", () => {
-    renderWithProviders(<TaskDetails task={task} saveTask={saveTask}/>);
+    renderWithProviders(<TaskDetails task={task} saveTask={saveTask} />);
 
     const saveButton = screen.getByRole("link", { name: "Zurück" });
     expect(saveButton).toBeInTheDocument();
