@@ -1,7 +1,8 @@
+import { vi } from "vitest";
 import { fireEvent, screen } from "@testing-library/react";
-import { TaskDetails } from "components";
+import { TaskDetails } from "~/components";
 import { Task } from "~/models/Task";
-import { renderWithProviders } from "helpers";
+import { renderWithProviders } from "~/helpers";
 
 const task: Task = {
   id: "1",
@@ -9,30 +10,33 @@ const task: Task = {
   description: "task",
 };
 
-jest.spyOn(console, "error").mockImplementation(() => {
-});
-
-const saveTask = jest.fn();
-const handleSave = jest.fn();
+const mockSaveTask = vi.fn();
 
 describe("<TaskDetails />", () => {
   it("should render task description, given a task", () => {
-    renderWithProviders(<TaskDetails task={task} saveTask={saveTask} />);
+    renderWithProviders(<TaskDetails task={task} saveTask={mockSaveTask} />);
     expect(screen.getByRole("textbox")).toHaveValue("task");
   });
 
-  it("should click save button", () => {
-    renderWithProviders(<TaskDetails task={task} saveTask={saveTask} />);
+  it("should mark item as done and save", () => {
+    renderWithProviders(<TaskDetails task={task} saveTask={mockSaveTask} />);
+
+    const checkbox = screen.getByRole("checkbox");
+    expect(checkbox).not.toBeChecked();
 
     const saveButton = screen.getByRole("button", { name: "Save" });
-    expect(saveButton).toBeInTheDocument();
+    expect(saveButton).toBeDisabled();
+
+    fireEvent.click(checkbox);
+    expect(checkbox).toBeChecked();
+    expect(saveButton).toBeEnabled();
 
     fireEvent.click(saveButton);
-    expect(handleSave).toBeCalled();
+    expect(mockSaveTask).toBeCalled();
   });
 
   it("should click back button", () => {
-    renderWithProviders(<TaskDetails task={task} saveTask={saveTask} />);
+    renderWithProviders(<TaskDetails task={task} saveTask={mockSaveTask} />);
 
     const saveButton = screen.getByRole("link", { name: "Zurück" });
     expect(saveButton).toBeInTheDocument();

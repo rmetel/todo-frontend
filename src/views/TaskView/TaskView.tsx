@@ -25,24 +25,18 @@ export const TaskView: React.FC = () => {
       .put(apiUrl + "/tasks/" + task.id, params)
       .then(function (response) {
         if (response.status === 200) {
-          immediateToast(
-            "info",
-            {
-              ...toastSettings,
-              title: `Task "${task.description}" wurde aktualisiert!`
-            }
-          );
+          immediateToast("info", {
+            ...toastSettings,
+            title: `Task "${task.description}" wurde aktualisiert!`
+          });
         }
       })
       .catch(function (error) {
-        immediateToast(
-          "info",
-          {
-            ...toastSettings,
-            progressBarColor: "rgb(241,81,86)",
-            title: `${error.name}: ${error.message}`
-          }
-        );
+        immediateToast("info", {
+          ...toastSettings,
+          progressBarColor: "rgb(241,81,86)",
+          title: `${error.name}: ${error.message}`
+        });
       });
   };
 

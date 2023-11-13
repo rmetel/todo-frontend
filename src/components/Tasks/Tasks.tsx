@@ -1,5 +1,13 @@
 import React, { KeyboardEvent, useEffect, useState } from "react";
-import { Button, CloseButton, Col, Form, InputGroup, ListGroup, Row } from "react-bootstrap";
+import {
+  Button,
+  CloseButton,
+  Col,
+  Form,
+  InputGroup,
+  ListGroup,
+  Row
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { Task } from "~/models/Task";
@@ -28,14 +36,11 @@ export const Tasks: React.FC = () => {
       .catch((error) => {
         setIsError(true);
         setLoaded(false);
-        immediateToast(
-          "info",
-          {
-            ...toastSettings,
-            progressBarColor: "rgb(241,81,86)",
-            title: error.message
-          }
-        );
+        immediateToast("info", {
+          ...toastSettings,
+          progressBarColor: "rgb(241,81,86)",
+          title: error.message
+        });
       });
   };
 
@@ -46,58 +51,46 @@ export const Tasks: React.FC = () => {
 
     axios
       .post(apiUrl + "/tasks", { description: taskName })
-      .then(function(response) {
+      .then((response) => {
         if (response.status === 200) {
-          immediateToast(
-            "info",
-            {
-              ...toastSettings,
-              title: `Task "${taskName}" wurde erstellt!`
-            }
-          );
+          immediateToast("info", {
+            ...toastSettings,
+            title: `Task "${taskName}" wurde erstellt!`
+          });
           setTaskName("");
           getTasks();
         }
       })
       .catch((error) => {
         setIsError(true);
-        immediateToast(
-          "info",
-          {
-            ...toastSettings,
-            progressBarColor: "rgb(241,81,86)",
-            title: error.message
-          }
-        );
+        immediateToast("info", {
+          ...toastSettings,
+          progressBarColor: "rgb(241,81,86)",
+          title: error.message
+        });
       });
   };
 
   const deleteTask = (task: Task) => {
     axios
       .delete(apiUrl + "/tasks/" + task.id)
-      .then(function(response) {
+      .then((response) => {
         if (response.status === 200) {
-          immediateToast(
-            "info",
-            {
-              ...toastSettings,
-              progressBarColor: "rgb(241,81,86)",
-              title: `Task "${task.description}" wurde gelöscht!`
-            }
-          );
+          immediateToast("info", {
+            ...toastSettings,
+            progressBarColor: "rgb(241,81,86)",
+            title: `Task "${task.description}" wurde gelöscht!`
+          });
         }
         getTasks();
       })
       .catch((error) => {
         setIsError(true);
-        immediateToast(
-          "info",
-          {
-            ...toastSettings,
-            progressBarColor: "rgb(241,81,86)",
-            title: error.message
-          }
-        );
+        immediateToast("info", {
+          ...toastSettings,
+          progressBarColor: "rgb(241,81,86)",
+          title: error.message
+        });
       });
   };
 
@@ -110,28 +103,22 @@ export const Tasks: React.FC = () => {
 
     axios
       .put(apiUrl + "/tasks/" + task.id, params)
-      .then(function(response) {
+      .then((response) => {
         if (response.status === 200) {
-          immediateToast(
-            "info",
-            {
-              ...toastSettings,
-              title: `Task "${task.description}" wurde aktualisiert!`
-            }
-          );
+          immediateToast("info", {
+            ...toastSettings,
+            title: `Task "${task.description}" wurde aktualisiert!`
+          });
           getTasks();
         }
       })
       .catch((error) => {
         setIsError(true);
-        immediateToast(
-          "info",
-          {
-            ...toastSettings,
-            progressBarColor: "rgb(241,81,86)",
-            title: error.message
-          }
-        );
+        immediateToast("info", {
+          ...toastSettings,
+          progressBarColor: "rgb(241,81,86)",
+          title: error.message
+        });
       });
   };
 
