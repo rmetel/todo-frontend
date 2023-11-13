@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { getApiUrl } from "helpers";
-import { Api } from "models/Api";
+import { getApiUrl } from "~/helpers";
+import { Api } from "~/models/Api";
 
 export const useApi = (): Api => {
   const [api, setApi] = useState<Api>({

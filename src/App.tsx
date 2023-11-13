@@ -1,14 +1,13 @@
-import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import "./App.css";
 import { Badge, Col, Container, Row } from "react-bootstrap";
-import { Tasks } from "components";
-import { useApi } from "hooks";
-import { TaskView } from "views";
 import { ReactKeycloakProvider } from "@react-keycloak/web";
-import keycloak from "./auth/keycloak";
-import { PrivateRoute } from "components";
 import "izitoast-react/dist/iziToast.css";
+import "./App.css";
+import { Tasks } from "~/components";
+import { useApi } from "~/hooks";
+import { TaskView } from "~/views";
+import keycloak from "~/auth/keycloak";
+import { PrivateRoute } from "~/components";
 
 const App = () => {
   const api = useApi();

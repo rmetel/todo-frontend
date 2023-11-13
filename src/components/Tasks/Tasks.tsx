@@ -3,7 +3,7 @@ import { Button, CloseButton, Col, Form, InputGroup, ListGroup, Row } from "reac
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { Task } from "~/models/Task";
-import { getApiUrl, toastSettings } from "helpers";
+import { getApiUrl, toastSettings } from "~/helpers";
 import { immediateToast } from "izitoast-react";
 
 export const Tasks: React.FC = () => {
@@ -102,7 +102,7 @@ export const Tasks: React.FC = () => {
   };
 
   const updateTaskStatus = (task: Task) => {
-    let params = {
+    const params = {
       id: task.id,
       description: task.description,
       done: !task.done

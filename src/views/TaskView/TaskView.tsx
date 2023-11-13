@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Container } from "react-bootstrap";
-import axios from "axios";
-import { TaskDetails } from "components";
-import { getApiUrl, toastSettings } from "helpers";
-import { Task } from "models/Task";
 import { immediateToast } from "izitoast-react";
+import axios from "axios";
+import { TaskDetails } from "~/components";
+import { getApiUrl, toastSettings } from "~/helpers";
+import { Task } from "~/models/Task";
 
 export const TaskView: React.FC = () => {
   const { taskId } = useParams();
@@ -15,7 +15,7 @@ export const TaskView: React.FC = () => {
   const apiUrl = getApiUrl();
 
   const saveTask = (task: Task) => {
-    let params = {
+    const params = {
       id: task.id,
       description: task.description,
       done: task.done,
@@ -24,13 +24,15 @@ export const TaskView: React.FC = () => {
     axios
       .put(apiUrl + "/tasks/" + task.id, params)
       .then(function (response) {
-        immediateToast(
-          "info",
-          {
-            ...toastSettings,
-            title: `Task "${task.description}" wurde aktualisiert!`
-          }
-        );
+        if (response.status === 200) {
+          immediateToast(
+            "info",
+            {
+              ...toastSettings,
+              title: `Task "${task.description}" wurde aktualisiert!`
+            }
+          );
+        }
       })
       .catch(function (error) {
         immediateToast(

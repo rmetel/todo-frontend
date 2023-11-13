@@ -20,8 +20,8 @@ export const toastSettings: IziToastSettings = {
 };
 
 export const getApiUrl = () => {
-  let isLocal = window.location.href.indexOf("localhost") > -1;
-  let localHost = "http://localhost:5000";
-  let apiEndpoint = "/api";
+  const isLocal = window.location.href.indexOf("localhost") > -1;
+  const localHost = "http://localhost:5000";
+  const apiEndpoint = "/api";
   return isLocal ? localHost + apiEndpoint : apiEndpoint;
 };
