@@ -1,9 +1,17 @@
 import React, { KeyboardEvent, useEffect, useState } from "react";
-import { Button, CloseButton, Col, Form, InputGroup, ListGroup, Row } from "react-bootstrap";
+import {
+  Button,
+  CloseButton,
+  Col,
+  Form,
+  InputGroup,
+  ListGroup,
+  Row,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import iziToast from "izitoast";
-import { Task } from '~/models/Task';
+import { Task } from "~/models/Task";
 import { getApiUrl } from "helpers";
 
 export const Tasks: React.FC = () => {
@@ -21,40 +29,41 @@ export const Tasks: React.FC = () => {
 
   const getTasks = () => {
     fetch(apiUrl + "/tasks")
-      .then(response => response.json())
+      .then((response) => response.json())
       .then((tasks) => {
         setLoaded(true);
         setTasks(tasks);
       })
-      .catch(error => {
+      .catch((error) => {
         setIsError(true);
         setLoaded(false);
 
         iziToast.show({
-          theme: 'dark',
-          icon: 'icon-person',
+          theme: "dark",
+          icon: "icon-person",
           title: `${error.message}`,
-          position: 'bottomCenter', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
-          progressBarColor: 'rgb(241,81,86)',
-          timeout: 3000
+          position: "bottomCenter", // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+          progressBarColor: "rgb(241,81,86)",
+          timeout: 3000,
         });
       });
-  }
+  };
 
   const addTask = (taskName: string) => {
     if (taskName === "") {
       return;
     }
 
-    axios.post(apiUrl + "/tasks", { description: taskName })
+    axios
+      .post(apiUrl + "/tasks", { description: taskName })
       .then(function (response) {
         iziToast.show({
-          theme: 'dark',
-          icon: 'icon-person',
+          theme: "dark",
+          icon: "icon-person",
           title: `Task "${taskName}" wurde erstellt!`,
-          position: 'bottomCenter', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
-          progressBarColor: 'rgb(0, 255, 184)',
-          timeout: 3000
+          position: "bottomCenter", // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+          progressBarColor: "rgb(0, 255, 184)",
+          timeout: 3000,
         });
 
         setTaskName("");
@@ -64,18 +73,19 @@ export const Tasks: React.FC = () => {
         setIsError(true);
         showError(error);
       });
-  }
+  };
 
   const deleteTask = (task: Task) => {
-    axios.delete(apiUrl + "/tasks/" + task.id)
+    axios
+      .delete(apiUrl + "/tasks/" + task.id)
       .then(function (response) {
         iziToast.show({
-          theme: 'dark',
-          icon: 'icon-person',
+          theme: "dark",
+          icon: "icon-person",
           title: `Task "${task.description}" wurde gelöscht!`,
-          position: 'bottomCenter', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
-          progressBarColor: 'rgb(241,81,86)',
-          timeout: 3000
+          position: "bottomCenter", // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+          progressBarColor: "rgb(241,81,86)",
+          timeout: 3000,
         });
 
         getTasks();
@@ -84,25 +94,26 @@ export const Tasks: React.FC = () => {
         setIsError(true);
         showError(error);
       });
-  }
+  };
 
   const updateTaskStatus = (task: Task) => {
     let params = {
       id: task.id,
       description: task.description,
-      done: !task.done
+      done: !task.done,
     };
 
-    axios.put(apiUrl + "/tasks/" + task.id, params)
+    axios
+      .put(apiUrl + "/tasks/" + task.id, params)
       .then(function (response) {
         if (response.status === 200) {
           iziToast.show({
-            theme: 'dark',
-            icon: 'icon-person',
+            theme: "dark",
+            icon: "icon-person",
             title: `Task "${task.description}" wurde aktualisiert!`,
-            position: 'bottomCenter', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
-            progressBarColor: 'rgb(0, 255, 184)',
-            timeout: 3000
+            position: "bottomCenter", // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+            progressBarColor: "rgb(0, 255, 184)",
+            timeout: 3000,
           });
 
           getTasks();
@@ -112,29 +123,28 @@ export const Tasks: React.FC = () => {
         setIsError(true);
         showError(error);
       });
-
-  }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLFormElement>) => {
     setTaskName(e.target.value);
-  }
+  };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.code === "Enter") {
       addTask(taskName);
     }
-  }
+  };
 
   const showError = (error: AxiosError) => {
     iziToast.show({
-      theme: 'dark',
-      icon: 'icon-person',
+      theme: "dark",
+      icon: "icon-person",
       title: `${error.name}: ${error.message}`,
-      position: 'bottomCenter', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
-      progressBarColor: 'rgb(241,81,86)',
-      timeout: 5000
+      position: "bottomCenter", // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+      progressBarColor: "rgb(241,81,86)",
+      timeout: 5000,
     });
-  }
+  };
 
   return (
     <>
@@ -150,49 +160,71 @@ export const Tasks: React.FC = () => {
           onChange={(e) => handleChange(e as any)}
           onKeyDown={handleKeyDown}
         />
-        <Button variant="outline-secondary" id="button-add" onClick={() => {
-          addTask(taskName)
-        }}>Add</Button>
+        <Button
+          variant="outline-secondary"
+          id="button-add"
+          onClick={() => {
+            addTask(taskName);
+          }}
+        >
+          Add
+        </Button>
       </InputGroup>
 
-      {isLoaded ?
+      {isLoaded ? (
         <ListGroup>
-          {tasks.map((task, index) =>
-            <ListGroup.Item key={task.id} className={task.done ? "resolved" : ""}>
+          {tasks.map((task, index) => (
+            <ListGroup.Item
+              key={task.id}
+              className={task.done ? "resolved" : ""}
+            >
               <Row>
-                <Col xs={9} lg={10} style={{ cursor: "pointer" }} onClick={() => {
-                  updateTaskStatus(task)
-                }}>
+                <Col
+                  xs={9}
+                  lg={10}
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    updateTaskStatus(task);
+                  }}
+                >
                   <span>
-                      {task.done ?
-                        <i className="bi-check-circle mr-2"/>
-                        :
-                        <i className="bi-circle mr-2"/>
-                      }
+                    {task.done ? (
+                      <i className="bi-check-circle mr-2"/>
+                    ) : (
+                      <i className="bi-circle mr-2"/>
+                    )}
                   </span>
                   {index + 1}. {task.description}
                 </Col>
                 <Col xs={3} lg={2} className={"text-right"}>
-                  <Link to={`/tasks/${task.id}`}><i className="bi-pencil mr-4"></i></Link>
-                  <CloseButton className={"deleteTask"} onClick={() => {
-                    deleteTask(task)
-                  }}/>
+                  <Link to={`/tasks/${task.id}`}>
+                    <i className="bi-pencil mr-4"></i>
+                  </Link>
+                  <CloseButton
+                    className={"deleteTask"}
+                    onClick={() => {
+                      deleteTask(task);
+                    }}
+                  />
                 </Col>
               </Row>
             </ListGroup.Item>
-          )}
+          ))}
         </ListGroup>
-        :
+      ) : (
         <div>
           <div className="d-flex justify-content-center">
             {isError ? "Fehler beim Verbinden..." : "Lädt Daten..."}
           </div>
           <div className="d-flex justify-content-center">
-            {isError ? <i className={"bi-cloud-slash"} style={{ fontSize: 32 }}></i> :
-              <i className={"bi-cloud-arrow-down"} style={{ fontSize: 32 }}></i>}
+            {isError ? (
+              <i className={"bi-cloud-slash"} style={{ fontSize: 32 }}></i>
+            ) : (
+              <i className={"bi-cloud-arrow-down"} style={{ fontSize: 32 }}></i>
+            )}
           </div>
         </div>
-      }
+      )}
     </>
-  )
-}
+  );
+};

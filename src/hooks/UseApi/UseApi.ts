@@ -7,14 +7,14 @@ export const useApi = (): Api => {
     id: null,
     branch: "",
     version: "",
-    deployed: false
+    deployed: false,
   });
 
   useEffect(() => {
     fetch(getApiUrl() + "/version")
-      .then(response => response.json())
-      .then(api => setApi(api));
+      .then((response) => response.json())
+      .then((api) => setApi(api));
   }, []);
 
   return api;
-}
+};

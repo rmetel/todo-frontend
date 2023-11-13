@@ -1,6 +1,6 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Task } from '../../models/Task';
+import { Task } from "~/models/Task";
 import { Button, Form } from "react-bootstrap";
 
 interface TaskDetailsProps {
@@ -9,21 +9,23 @@ interface TaskDetailsProps {
 }
 
 export const TaskDetails: React.FC<TaskDetailsProps> = ({ task, saveTask }) => {
-  const [taskDescription, setTaskDescription] = useState<string>(task.description);
+  const [taskDescription, setTaskDescription] = useState<string>(
+    task.description,
+  );
   const [taskDone, setTaskDone] = useState<boolean>(task.done);
   const [isChanged, setIsChanged] = useState<boolean>(false);
 
   const handleChangeTaskDescription = (e: ChangeEvent<HTMLInputElement>) => {
     setTaskDescription(e.target.value);
-  }
+  };
 
   const handleChangeTaskDone = (e: ChangeEvent<HTMLInputElement>) => {
     setTaskDone(e.target.checked);
-  }
+  };
 
   useEffect(() => {
     if (taskDescription === task.description && taskDone === task.done) {
-      setIsChanged(false)
+      setIsChanged(false);
     } else {
       setIsChanged(true);
     }
@@ -34,35 +36,40 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({ task, saveTask }) => {
     saveTask({
       ...task,
       description: taskDescription,
-      done: taskDone
+      done: taskDone,
     });
-  }
+  };
 
   return (
     <>
       <div className="col-md-10 mb-3">
         <NavLink to="/" className="text-dark">
-          <i className="bi-arrow-left"></i>&nbsp;Zurück</NavLink>
+          <i className="bi-arrow-left"></i>&nbsp;Zurück
+        </NavLink>
       </div>
       <div className="col-md-10">
         <div className="card mb-10">
           <div className="row">
             <div className="col-md-12">
               <div className="product p-4">
-                <h2>{taskDescription} ist {taskDone ? "erledigt :)" : " nicht erledigt."}</h2>
+                <h2>
+                  {taskDescription} ist{" "}
+                  {taskDone ? "erledigt :)" : " nicht erledigt."}
+                </h2>
                 <Form>
                   <div className="form-group mb-4">
-                    <input type="text"
-                           className="form-control"
-                           placeholder="Enter task name"
-                           value={taskDescription}
-                           onChange={handleChangeTaskDescription}
-                           style={{
-                             border: "none",
-                             borderBottom: "1px solid #aeaeae",
-                             borderRadius: 0,
-                             paddingLeft: 0
-                           }}
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Enter task name"
+                      value={taskDescription}
+                      onChange={handleChangeTaskDescription}
+                      style={{
+                        border: "none",
+                        borderBottom: "1px solid #aeaeae",
+                        borderRadius: 0,
+                        paddingLeft: 0,
+                      }}
                     />
                   </div>
                   <Form.Check
@@ -74,8 +81,11 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({ task, saveTask }) => {
                     label={"Erledigt"}
                   />
                   <div style={{ textAlign: "center" }}>
-                    <Button variant={isChanged ? "primary" : "outline-secondary"} onClick={handleSave}
-                            disabled={!isChanged}>
+                    <Button
+                      variant={isChanged ? "primary" : "outline-secondary"}
+                      onClick={handleSave}
+                      disabled={!isChanged}
+                    >
                       Save
                     </Button>
                   </div>
@@ -87,4 +97,4 @@ export const TaskDetails: React.FC<TaskDetailsProps> = ({ task, saveTask }) => {
       </div>
     </>
   );
-}
+};

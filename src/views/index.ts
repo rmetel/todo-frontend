@@ -1,1 +1,1 @@
-export { TaskView } from "./TaskView"
+export { TaskView } from "./TaskView";
