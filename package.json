@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/plugin-transform-private-property-in-object": "^7.23.3",
     "@react-keycloak/web": "^3.4.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/user-event": "^13.5.0",
@@ -12,7 +13,7 @@
     "bootstrap-icons": "^1.10.5",
     "izitoast-react": "^1.0.19",
     "keycloak-js": "^22.0.1",
-    "react": "^17.0.2",
+    "react": "^18.2.0",
     "react-bootstrap": "^2.8.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.14.2",
