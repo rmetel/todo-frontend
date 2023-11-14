@@ -17,7 +17,7 @@ export default defineConfig({
   },
   test: {
     globals: true,
-    environment: "jsdom",
+    environment: "jsdom", // https://zenn.dev/builder_search/articles/14d8cc0dd2e606
     setupFiles: ["./setupTests.ts"]
   }
 });
