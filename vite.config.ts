@@ -6,7 +6,7 @@ import * as path from "path";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  // base: "/",
+  base: "http://todo-app.tech/",
   resolve: {
     alias: {
       "~": path.resolve(__dirname, "./src")
