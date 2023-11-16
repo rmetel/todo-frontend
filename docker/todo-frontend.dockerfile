@@ -1,7 +1,5 @@
 FROM node:21-alpine3.17
 
-LABEL author="Ralph Metel"
-
 WORKDIR /var/www
 
 COPY package.json tsconfig.json ./
@@ -18,15 +16,7 @@ RUN npm run build
 
 EXPOSE 3000
 
-#RUN serve -s build
-
-ENTRYPOINT ["serve","-s", "build"]
-
-#COPY . ./
-
-#EXPOSE 3000
-
-#ENTRYPOINT ["npm","start"]
+ENTRYPOINT ["serve", "-s", "build"]
 
 # terminal
 # docker build -t todo-frontend -f docker/todo-frontend.dockerfile .
