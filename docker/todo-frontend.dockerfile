@@ -1,19 +1,22 @@
-FROM node:18-alpine
+FROM node:21-alpine3.17
 
-LABEL author="Ralph Metel"
-
-# cd /var/www
 WORKDIR /var/www
 
-COPY package.json package-lock.json ./
+COPY package.json tsconfig.json ./
+
+COPY public ./public
+
+COPY src ./src
 
 RUN npm install --legacy-peer-deps
 
-COPY . ./
+RUN npm install -g serve
+
+RUN npm run build
 
 EXPOSE 3000
 
-ENTRYPOINT ["npm","start"]
+ENTRYPOINT ["serve", "-s", "build"]
 
 # terminal
 # docker build -t todo-frontend -f docker/todo-frontend.dockerfile .
