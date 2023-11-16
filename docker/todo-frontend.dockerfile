@@ -4,10 +4,6 @@ WORKDIR /var/www
 
 COPY . ./
 
-COPY public ./public
-
-COPY src ./src
-
 RUN npm install
 
 RUN npm install -g serve
