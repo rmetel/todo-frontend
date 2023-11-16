@@ -2,13 +2,13 @@ FROM node:21-alpine3.17
 
 WORKDIR /var/www
 
-COPY package.json tsconfig.json ./
+COPY . ./
 
 COPY public ./public
 
 COPY src ./src
 
-RUN npm install --legacy-peer-deps
+RUN npm install
 
 RUN npm install -g serve
 
