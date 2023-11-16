@@ -12,7 +12,6 @@ import { Link } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import { Task } from "~/models/Task";
 import { getApiUrl, showToast } from "~/helpers";
-import iziToast from "izitoast";
 
 export const Tasks: React.FC = () => {
   const [isLoaded, setLoaded] = useState(false);
@@ -36,13 +35,7 @@ export const Tasks: React.FC = () => {
       .catch((error) => {
         setIsError(true);
         setLoaded(false);
-        iziToast.show({
-          theme: "dark",
-          icon: "icon-person",
-          position: "bottomCenter", // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
-          progressBarColor: "rgb(241,81,86)",
-          title: error.message
-        });
+        showToast(error.message, "error");
       });
   };
 
