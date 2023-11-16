@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Container } from "react-bootstrap";
-import { immediateToast } from "izitoast-react";
 import axios from "axios";
 import { TaskDetails } from "~/components";
-import { getApiUrl, toastSettings } from "~/helpers";
+import { getApiUrl, showToast } from "~/helpers";
 import { Task } from "~/models/Task";
 
 export const TaskView: React.FC = () => {
@@ -23,20 +22,11 @@ export const TaskView: React.FC = () => {
 
     axios
       .put(apiUrl + "/tasks/" + task.id, params)
-      .then(function (response) {
-        if (response.status === 200) {
-          immediateToast("info", {
-            ...toastSettings,
-            title: `Task "${task.description}" wurde aktualisiert!`
-          });
-        }
+      .then(() => {
+        showToast(`Task "${task.description}" wurde aktualisiert!`, "success");
       })
-      .catch(function (error) {
-        immediateToast("info", {
-          ...toastSettings,
-          progressBarColor: "rgb(241,81,86)",
-          title: `${error.name}: ${error.message}`
-        });
+      .catch((error) => {
+        showToast(`${error.name}: ${error.message}`, "error");
       });
   };
 

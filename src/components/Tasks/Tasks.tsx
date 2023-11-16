@@ -9,10 +9,10 @@ import {
   Row
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Task } from "~/models/Task";
-import { getApiUrl, toastSettings } from "~/helpers";
-import { immediateToast } from "izitoast-react";
+import { getApiUrl, showToast } from "~/helpers";
+import iziToast from "izitoast";
 
 export const Tasks: React.FC = () => {
   const [isLoaded, setLoaded] = useState(false);
@@ -36,8 +36,10 @@ export const Tasks: React.FC = () => {
       .catch((error) => {
         setIsError(true);
         setLoaded(false);
-        immediateToast("info", {
-          ...toastSettings,
+        iziToast.show({
+          theme: "dark",
+          icon: "icon-person",
+          position: "bottomCenter", // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
           progressBarColor: "rgb(241,81,86)",
           title: error.message
         });
@@ -48,49 +50,29 @@ export const Tasks: React.FC = () => {
     if (taskName === "") {
       return;
     }
-
     axios
       .post(apiUrl + "/tasks", { description: taskName })
-      .then((response) => {
-        if (response.status === 200) {
-          immediateToast("info", {
-            ...toastSettings,
-            title: `Task "${taskName}" wurde erstellt!`
-          });
-          setTaskName("");
-          getTasks();
-        }
+      .then(() => {
+        showToast(`Task "${taskName}" wurde erstellt!`, "success");
+        setTaskName("");
+        getTasks();
       })
-      .catch((error) => {
+      .catch((error: AxiosError) => {
         setIsError(true);
-        immediateToast("info", {
-          ...toastSettings,
-          progressBarColor: "rgb(241,81,86)",
-          title: error.message
-        });
+        showToast(error.message, "error");
       });
   };
 
   const deleteTask = (task: Task) => {
     axios
       .delete(apiUrl + "/tasks/" + task.id)
-      .then((response) => {
-        if (response.status === 200) {
-          immediateToast("info", {
-            ...toastSettings,
-            progressBarColor: "rgb(241,81,86)",
-            title: `Task "${task.description}" wurde gelöscht!`
-          });
-        }
+      .then(() => {
+        showToast(`Task "${task.description}" wurde gelöscht!`, "error");
         getTasks();
       })
-      .catch((error) => {
+      .catch((error: AxiosError) => {
         setIsError(true);
-        immediateToast("info", {
-          ...toastSettings,
-          progressBarColor: "rgb(241,81,86)",
-          title: error.message
-        });
+        showToast(error.message, "error");
       });
   };
 
@@ -103,22 +85,13 @@ export const Tasks: React.FC = () => {
 
     axios
       .put(apiUrl + "/tasks/" + task.id, params)
-      .then((response) => {
-        if (response.status === 200) {
-          immediateToast("info", {
-            ...toastSettings,
-            title: `Task "${task.description}" wurde aktualisiert!`
-          });
-          getTasks();
-        }
+      .then(() => {
+        showToast(`Task "${task.description}" wurde aktualisiert!`, "success");
+        getTasks();
       })
-      .catch((error) => {
+      .catch((error: AxiosError) => {
         setIsError(true);
-        immediateToast("info", {
-          ...toastSettings,
-          progressBarColor: "rgb(241,81,86)",
-          title: error.message
-        });
+        showToast(error.message, "error");
       });
   };
 
