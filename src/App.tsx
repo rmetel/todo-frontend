@@ -33,7 +33,7 @@ const App = () => {
                 </Routes>
               </Router>
               <h6 id={"apiVersion"}>
-                <Badge bg="info">
+                <Badge bg="info" className="mb-1">
                   fe: main 1.3.113
                 </Badge>
                 <br />
