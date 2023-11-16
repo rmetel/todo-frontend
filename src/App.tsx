@@ -33,8 +33,12 @@ const App = () => {
                 </Routes>
               </Router>
               <h6 id={"apiVersion"}>
+                <Badge bg="info">
+                  fe: main 1.3.113
+                </Badge>
+                <br />
                 <Badge bg="secondary">
-                  {api.branch} {api.version}
+                  be: {api.branch} {api.version}
                 </Badge>
               </h6>
             </ReactKeycloakProvider>
