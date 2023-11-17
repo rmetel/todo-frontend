@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Badge, Col, Container, Row } from "react-bootstrap";
 import { ReactKeycloakProvider } from "@react-keycloak/web";
-import "izitoast-react/dist/iziToast.css";
+import "izitoast/dist/js/iziToast.min";
 import "./App.css";
 import { Tasks } from "~/components";
 import { useApi } from "~/hooks";
