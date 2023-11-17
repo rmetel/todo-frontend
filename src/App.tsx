@@ -34,7 +34,7 @@ const App = () => {
               </Router>
               <h6 id={"apiVersion"}>
                 <Badge bg="info" className="mb-1">
-                  fe: main 1.3.115
+                  fe: main 1.3.117
                 </Badge>
                 <br />
                 <Badge bg="secondary">

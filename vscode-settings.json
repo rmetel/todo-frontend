@@ -1,0 +1,23 @@
+{
+  "security.workspace.trust.untrustedFiles": "open",
+  "git.autofetch": true,
+  "vitest.enable": true,
+  "jest.autoRun": {
+    "onStartup": []
+  },
+  "git.mergeEditor": true,
+  "editor.formatOnSave": true,
+  "playwright.showTrace": false,
+  "playwright.reuseBrowser": true,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "git.openRepositoryInParentFolders": "never",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "prettier.enableDebugLogs": true,
+  "prettier.useEditorConfig": false,
+  "editor.codeActionsOnSave": {
+    "source.removeUnusedImports": true,
+    "source.fixAll.eslint": true
+  }
+}
