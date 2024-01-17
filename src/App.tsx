@@ -1,15 +1,15 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { Badge, Col, Container, Row } from "react-bootstrap";
 import { ReactKeycloakProvider } from "@react-keycloak/web";
 import "izitoast/dist/js/iziToast.min";
-import "./App.css";
-import { PrivateRoute, Tasks } from "~/components";
-import { useApi } from "~/hooks";
-import { TaskView } from "~/views";
-import keycloak from "~/auth/keycloak";
-import { Counter } from "~/components/Counter/Counter";
+import { Badge, Col, Container, Row } from "react-bootstrap";
 import { Provider } from "react-redux";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import keycloak from "~/auth/keycloak";
+import { PrivateRoute, Tasks } from "~/components";
+import { Counter } from "~/components/Counter/Counter";
+import { useApi } from "~/hooks";
 import store from "~/store";
+import { TaskView } from "~/views";
+import "./App.css";
 
 const App = () => {
   const api = useApi();
@@ -23,14 +23,17 @@ const App = () => {
               <ReactKeycloakProvider authClient={keycloak}>
                 <Router>
                   <Routes>
-                    <Route path="/" element={(
-                      <>
-                        <Tasks />
-                        <br />
-                        <br />
-                        <Counter />
-                      </>
-                    )} />
+                    <Route
+                      path="/"
+                      element={
+                        <>
+                          <Tasks />
+                          <br />
+                          <br />
+                          <Counter />
+                        </>
+                      }
+                    />
                     <Route
                       path="/secure"
                       element={

@@ -1,27 +1,17 @@
 import { useSelector, useDispatch } from "react-redux";
-import {
-  decrement,
-  increment,
-  selectCount,
-} from "~/slices/CounterSlice";
-import React from "react";
+import { decrement, increment, selectCount } from "~/slices/CounterSlice";
 
 export function Counter() {
   const count = useSelector(selectCount);
   const dispatch = useDispatch();
 
-  const buttonStyle: React.CSSProperties = {
-    border: "none",
-    padding: "1px 10px",
-  };
-
   return (
     <div>
       <div>
         <button
+          className="btn btn-primary btn-sm mx-lg-1"
           aria-label="Increment value"
           onClick={() => dispatch(increment())}
-          style={buttonStyle}
         >
           +
         </button>
@@ -31,7 +21,7 @@ export function Counter() {
         <button
           aria-label="Decrement value"
           onClick={() => dispatch(decrement())}
-          style={buttonStyle}
+          className="btn btn-primary btn-sm mx-lg-1"
         >
           -
         </button>
