@@ -16,7 +16,11 @@ export default defineConfig({
   },
   server: {
     port: 3000,
-    open: true
+    open: true,
+    https: {
+      key: "cert.key",
+      cert: "cert.crt",
+    },
   },
   test: {
     globals: true,
