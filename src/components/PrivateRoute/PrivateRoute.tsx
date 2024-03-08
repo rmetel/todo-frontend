@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useKeycloak } from "@react-keycloak/web";
+import { User } from "~/models/User";
 
 interface PrivateRouteProps {
   children: React.ReactElement | null;
@@ -7,9 +8,18 @@ interface PrivateRouteProps {
 
 export const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
   const { keycloak } = useKeycloak();
-
   const isLoggedIn = keycloak.authenticated;
+  const [user, setUser] = useState<User | null>(null);
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      keycloak.loadUserInfo().then((user) => {
+        setUser(user as User);
+      });
+    }
+  }, [isLoggedIn]);
+
+  // console.log("keycloak", keycloak.loadUserInfo().then((data) => {console.log(data)}));
   return (
     <>
       <div
@@ -20,7 +30,7 @@ export const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
           alignItems: "center",
         }}
       >
-        <h3>Private area, please login...</h3>
+        <h3>{isLoggedIn ? `Welcome ${user?.name}!` : "Private area, please login..."}</h3>
         <div>
           {isLoggedIn ? (
             <button
