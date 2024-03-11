@@ -101,8 +101,8 @@ services:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
       PROXY_ADDRESS_FORWARDING: 'true'
-      KC_HOSTNAME_URL: todo-app.tech
-      KC_HOSTNAME_ADMIN: todo-app.tech
+      KC_HOSTNAME_URL: https://todo-app.tech:443
+    #      KC_HOSTNAME_ADMIN: todo-app.tech
     ports:
       - "8080:8080"
       - "8443:8443"
