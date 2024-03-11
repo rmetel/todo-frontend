@@ -93,7 +93,7 @@ services:
 
   todo-keycloak:
     container_name: todo-keycloak
-    image: ddrram/todo-keycloak-prod:1.0.1
+    image: ddrram/todo-keycloak-prod:1.0.0
     #    image: quay.io/keycloak/keycloak:latest
     command:
       - start
