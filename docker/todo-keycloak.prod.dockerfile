@@ -20,7 +20,7 @@ ENV KC_DB=postgres
 ENV KC_DB_URL=jdbc:postgresql://todo-postgres:5432/keycloak
 ENV KC_DB_USERNAME=root
 ENV KC_DB_PASSWORD=todo
-#ENV KC_HOSTNAME=localhost
+ENV KC_HOSTNAME=localhost
 ENTRYPOINT ["/opt/keycloak/bin/kc.sh"]
 
 # terminal

@@ -3,7 +3,7 @@ version: "3"
 services:
   todo-nginx:
     container_name: todo-nginx
-    image: ddrram/todo-nginx-prod:1.3.5
+    image: ddrram/todo-nginx-prod:1.3.6
     ports:
       - "80:80"
       - "443:443"
@@ -93,7 +93,7 @@ services:
 
   todo-keycloak:
     container_name: todo-keycloak
-    image: ddrram/todo-keycloak-prod:1.0.2
+    image: ddrram/todo-keycloak-prod:1.0.3
     #    image: quay.io/keycloak/keycloak:latest
     command:
       - start
@@ -101,8 +101,8 @@ services:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
       PROXY_ADDRESS_FORWARDING: 'true'
-      KC_HOSTNAME: todo-app.tech
-      KC_HOSTNAME_ADMIN_URL: https://todo-app.tech
+      KC_HOSTNAME_URL: https://todo-app.tech/auth
+      KC_HOSTNAME_ADMIN_URL: https://todo-app.tech/auth
     ports:
       - "8080:8080"
       - "8443:8443"
