@@ -103,6 +103,7 @@ services:
       PROXY_ADDRESS_FORWARDING: 'true'
       KC_HOSTNAME_URL: https://todo-app.tech/auth
       KC_HOSTNAME_ADMIN_URL: https://todo-app.tech/auth
+      KC_PROXY_HEADERS: forwarded
     ports:
       - "8080:8080"
       - "8443:8443"
