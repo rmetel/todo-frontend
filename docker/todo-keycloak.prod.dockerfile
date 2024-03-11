@@ -25,3 +25,8 @@ ENTRYPOINT ["/opt/keycloak/bin/kc.sh"]
 
 # terminal
 # docker build -t todo-keycloak -f docker/todo-keycloak.prod.dockerfile .
+
+# docker hub
+# docker build -t ddrram/todo-keycloak-prod:1.0.0 -f docker/todo-keycloak.prod.dockerfile .
+# docker push ddrram/todo-keycloak-prod:1.0.0
+# docker run --name todo-keycloak-prod -dp 8080:8080 ddrram/todo-keycloak-prod:1.0.0
