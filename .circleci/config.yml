@@ -43,7 +43,7 @@ jobs:
       - image: cimg/node:$NODE_VERSION
     environment:
       BUILD_NUMBER: << pipeline.number >>
-      DEPLOY_SCRIPT: ~/git/todo-backend/deploy.sh
+      DEPLOY_SCRIPT: ~/git/todo-frontend/deploy.sh
     steps:
       - run:
           name: Timestamp
