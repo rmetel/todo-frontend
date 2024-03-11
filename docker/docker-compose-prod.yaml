@@ -3,7 +3,7 @@ version: "3"
 services:
   todo-nginx:
     container_name: todo-nginx
-    image: ddrram/todo-nginx-prod:1.3.3
+    image: ddrram/todo-nginx-prod:1.3.4
     ports:
       - "80:80"
       - "443:443"
@@ -101,8 +101,8 @@ services:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
       PROXY_ADDRESS_FORWARDING: 'true'
-      KC_HOSTNAME: todo-app.tech
-      KC_HOSTNAME_ADMIN: todo-app.tech
+      KC_HOSTNAME_URL: https://todo-app.tech
+      KC_HOSTNAME_ADMIN_URL: https://todo-app.tech
     ports:
       - "8080:8080"
       - "8443:8443"
