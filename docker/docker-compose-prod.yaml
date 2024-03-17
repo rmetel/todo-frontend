@@ -93,18 +93,18 @@ services:
 
   todo-keycloak:
     container_name: todo-keycloak
-    image: ddrram/todo-keycloak-prod:1.0.3
+    image: ddrram/todo-keycloak-prod:1.0.4
     #    image: quay.io/keycloak/keycloak:latest
     command:
       - start
     environment:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
-      PROXY_ADDRESS_FORWARDING: true
-    #      KC_HOSTNAME_URL: todo-app.tech
-    #      KC_HOSTNAME_ADMIN: todo-app.tech
+      PROXY_ADDRESS_FORWARDING: "true"
+      KC_HOSTNAME: todo-app.tech
+      KC_HOSTNAME_ADMIN: todo-app.tech
+      KC_PROXY: edge
     #      KC_HTTP_RELATIVE_PATH: /auth
-    #      KC_PROXY_HEADERS: forwarded
     ports:
       - "8080:8080"
       - "8443:8443"
@@ -119,5 +119,4 @@ networks:
 volumes:
   todo-db: { }
   todo-postgres: { }
-
 # docker-compose -f docker/docker-compose-prod.yaml up -d
