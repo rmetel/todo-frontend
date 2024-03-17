@@ -20,17 +20,17 @@ services:
     restart: unless-stopped
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
 
-  todo-certbot-renewal:
-    image: certbot/certbot
-    container_name: todo-certbot-renewal
-    depends_on:
-      - todo-nginx
-    volumes:
-      - /root/usr/share/certbot/conf:/etc/letsencrypt
-      - /root/usr/share/certbot/www:/var/www/certbot
-    networks:
-      - todo-app
-    entrypoint: sh -c "certbot renew && sleep 7d"
+  # todo-certbot-renewal:
+  #   image: certbot/certbot
+  #   container_name: todo-certbot-renewal
+  #   depends_on:
+  #     - todo-nginx
+  #   volumes:
+  #     - /root/usr/share/certbot/conf:/etc/letsencrypt
+  #     - /root/usr/share/certbot/www:/var/www/certbot
+  #   networks:
+  #     - todo-app
+  #   entrypoint: sh -c "certbot renew && sleep 7d"
   #    command: renew
   #    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
@@ -94,18 +94,24 @@ services:
 
   todo-keycloak:
     container_name: todo-keycloak
-    image: ddrram/todo-keycloak-prod:1.0.4
-    #    image: quay.io/keycloak/keycloak:latest
+    # image: ddrram/todo-keycloak-prod:1.0.4
+    image: quay.io/keycloak/keycloak:latest
     command:
-      - start
+      - start-dev 
+      - --proxy-headers=xforwarded
+      - --proxy=edge
+      - --http-relative-path=/auth
     environment:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
-      PROXY_ADDRESS_FORWARDING: "true"
-      KC_HOSTNAME: todo-app.tech
-      KC_HOSTNAME_ADMIN: todo-app.tech
-      KC_PROXY: edge
+      # KC_HOSTNAME_STRICT_HTTPS: "true"
+      # PROXY_ADDRESS_FORWARDING: "true"
+      # KC_HOSTNAME: todo-app.tech
+      # KC_HOSTNAME_ADMIN: todo-app.tech
+      # KC_PROXY: edge
     #      KC_HTTP_RELATIVE_PATH: /auth
+    volumes:
+      - /root/usr/share/keycloak/data:/opt/keycloak/data
     ports:
       - "8080:8080"
       - "8443:8443"
