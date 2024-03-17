@@ -99,7 +99,6 @@ services:
     command:
       - start-dev 
       - --proxy-headers=xforwarded
-      - --proxy=edge
       - --http-relative-path=/auth
     environment:
       KEYCLOAK_ADMIN: admin
