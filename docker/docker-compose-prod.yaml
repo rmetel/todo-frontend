@@ -31,8 +31,8 @@ services:
     networks:
       - todo-app
     entrypoint: sh -c "certbot renew && sleep 7d"
-     command: renew
-     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+  #    command: renew
+  #    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
   todo-frontend:
     container_name: todo-frontend
