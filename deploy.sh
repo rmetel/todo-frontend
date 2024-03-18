@@ -15,7 +15,7 @@ export TODO_BACKEND_BRANCH
 cd ~/git/todo-frontend || exit
 
 # todo: switch branch
-git switch "$TODO_FRONTEND_BRANCH"
+#git switch "$TODO_FRONTEND_BRANCH"
 
 git pull
 
