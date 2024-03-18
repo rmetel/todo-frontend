@@ -1,10 +1,10 @@
 #!/bin/sh
 
-TODO_FRONTEND_VERSION=$(grep -oPm1 "(?<=<version>)[^<]+" ~/logs/build/todo-frontend.log)
-TODO_FRONTEND_BRANCH=$(grep -oPm1 "(?<=<branch>)[^<]+" ~/logs/build/todo-frontend.log)
+TODO_FRONTEND_VERSION=$(grep -oPm1 "(?<=<version>)[^<]+" ~/logs/pipeline/todo-frontend.log)
+TODO_FRONTEND_BRANCH=$(grep -oPm1 "(?<=<branch>)[^<]+" ~/logs/pipeline/todo-frontend.log)
 
-TODO_BACKEND_VERSION=$(grep -oPm1 "(?<=<version>)[^<]+" ~/logs/build/todo-backend.log)
-TODO_BACKEND_BRANCH=$(grep -oPm1 "(?<=<branch>)[^<]+" ~/logs/build/todo-backend.log)
+TODO_BACKEND_VERSION=$(grep -oPm1 "(?<=<version>)[^<]+" ~/logs/pipeline/todo-backend.log)
+TODO_BACKEND_BRANCH=$(grep -oPm1 "(?<=<branch>)[^<]+" ~/logs/pipeline/todo-backend.log)
 
 export TODO_FRONTEND_VERSION
 export TODO_FRONTEND_BRANCH
