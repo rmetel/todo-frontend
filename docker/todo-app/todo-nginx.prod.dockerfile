@@ -10,6 +10,8 @@ RUN rm /usr/share/nginx/html/*
 
 COPY ./nginx/nginx.prod.conf /etc/nginx/nginx.conf
 
+COPY ./wine-app /etc/wine-app
+
 CMD ["nginx", "-g", "daemon off;"]
 
 # terminal

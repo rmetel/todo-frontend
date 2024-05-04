@@ -3,7 +3,7 @@ version: "3"
 services:
   nginx:
     container_name: nginx
-    image: ddrram/todo-nginx-prod:1.4.4
+    image: ddrram/todo-nginx-prod:1.4.5
     ports:
       - "80:80"
       - "443:443"
