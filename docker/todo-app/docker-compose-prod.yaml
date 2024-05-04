@@ -3,7 +3,7 @@ version: "3"
 services:
   todo-nginx:
     container_name: todo-nginx
-    image: ddrram/todo-nginx-prod:1.3.6
+    image: ddrram/todo-nginx-prod:1.4.0
     ports:
       - "80:80"
       - "443:443"
@@ -36,16 +36,27 @@ services:
 
   todo-frontend:
     container_name: todo-frontend
-    image: ddrram/todo-frontend:${TODO_FRONTEND_VERSION}
+    #    image: ddrram/todo-frontend:${TODO_FRONTEND_VERSION}
+    image: ddrram/todo-frontend:1.3.170
     ports:
       - "3000:3000"
     networks:
       - todo-app
     restart: unless-stopped
 
+  wine-app:
+    container_name: wine-app
+    image: ddrram/wine-app:1.0.1
+    ports:
+      - "3002:3002"
+    networks:
+      - todo-app
+    restart: unless-stopped
+
   todo-backend:
     container_name: todo-backend
-    image: ddrram/todo-backend:${TODO_BACKEND_VERSION}
+    #    image: ddrram/todo-backend:${TODO_BACKEND_VERSION}
+    image: ddrram/todo-backend:1.3.312
     ports:
       - "5000:5000"
     volumes:

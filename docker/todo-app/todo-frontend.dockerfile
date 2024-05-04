@@ -15,11 +15,11 @@ EXPOSE 3000
 ENTRYPOINT ["serve", "-s", "build"]
 
 # terminal
-# docker build -t todo-frontend -f docker/todo-frontend.dockerfile .
+# docker build -t todo-frontend -f docker/todo-app/todo-frontend.dockerfile .
 # docker run --name todo-frontend -dp 3000:3000 todo-frontend
 
 # docker hub
-# docker build -t ddrram/todo-frontend:1.1.0 -f todo-frontend.dockerfile .
+# docker build -t ddrram/todo-frontend:1.1.0 -f docker/todo-app/todo-frontend.dockerfile .
 # docker push ddrram/todo-frontend:1.1.0
 # docker run --name todo-frontend -dp 3000:3000 ddrram/todo-frontend:1.1.0
 
