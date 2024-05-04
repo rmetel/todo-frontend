@@ -46,7 +46,7 @@ services:
 
   wine-app:
     container_name: wine-app
-    image: ddrram/wine-app:1.0.1
+    image: ddrram/wine-app:1.0.2
     ports:
       - "3002:3002"
     networks:

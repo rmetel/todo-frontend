@@ -10,6 +10,10 @@ RUN npm install -g serve
 
 RUN npm run build
 
+RUN apk add nano
+
+RUN apk add curl
+
 EXPOSE 3000
 
 ENTRYPOINT ["serve", "-s", "build"]
