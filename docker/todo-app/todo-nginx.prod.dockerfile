@@ -10,7 +10,9 @@ RUN rm /usr/share/nginx/html/*
 
 COPY ./nginx/nginx.prod.conf /etc/nginx/nginx.conf
 
-COPY ./todo-app /etc/todo-app
+#COPY ./public /var/www/public
+
+COPY ./todo-app /var/www/todo-app
 
 CMD ["nginx", "-g", "daemon off;"]
 

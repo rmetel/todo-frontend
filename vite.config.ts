@@ -6,13 +6,14 @@ import * as path from "path";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  base: "/todo-app",
   resolve: {
     alias: {
       "~": path.resolve(__dirname, "./src")
     },
   },
   build: {
-    outDir: "build"
+    outDir: "todo-app",
   },
   server: {
     port: 3000,
