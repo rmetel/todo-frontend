@@ -2,7 +2,7 @@ FROM node:21-alpine3.17
 
 WORKDIR /var/www
 
-COPY . ./
+COPY .. ./
 
 RUN npm install
 
