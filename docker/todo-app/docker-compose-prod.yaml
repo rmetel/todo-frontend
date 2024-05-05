@@ -7,8 +7,8 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    #    depends_on:
-    #      - todo-backend
+    depends_on:
+      - todo-backend
     #      - todo-frontend
     #      - todo-keycloak
     networks:
@@ -33,7 +33,7 @@ services:
 #    entrypoint: sh -c "certbot renew && sleep 7d"
 #  #    command: renew
 #  #    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
-#
+
 #  todo-frontend:
 #    container_name: todo-frontend
 #    #    image: ddrram/todo-frontend:${TODO_FRONTEND_VERSION}
@@ -52,45 +52,45 @@ services:
 #    networks:
 #      - todo-app
 #    restart: unless-stopped
-#
-#  todo-backend:
-#    container_name: todo-backend
-#    #    image: ddrram/todo-backend:${TODO_BACKEND_VERSION}
-#    image: ddrram/todo-backend:1.3.312
-#    ports:
-#      - "5000:5000"
-#    volumes:
-#      - /root/logs:/opt/app/logs
-#    depends_on:
-#      - todo-db
-#    networks:
-#      - todo-app
-#    environment:
-#      SPRING_APPLICATION_JSON: '{
-#        "spring.datasource.url": "jdbc:mysql://todo-db:3306/todo-db?useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true",
-#        "spring.datasource.username": "root",
-#        "spring.datasource.password": "todo",
-#        "spring.datasource.driver-class-name": "com.mysql.cj.jdbc.Driver",
-#        "spring.datasource.initialization-mode": "always",
-#        "spring.jpa.show-sql": "true",
-#        "spring.jpa.hibernate.ddl-auto": "update",
-#        "spring.jpa.properties.hibernate.dialect": "org.hibernate.dialect.MySQL5InnoDBDialect"}'
-#    restart: unless-stopped
-#
-#  todo-db:
-#    container_name: todo-db
-#    image: mysql:8.0.30
-#    environment:
-#      MYSQL_DATABASE: todo-db
-#      MYSQL_ROOT_PASSWORD: todo
-#    ports:
-#      - "3306:3306"
-#    volumes:
-#      - "/root/usr/share/databases/todo-db:/var/lib/mysql:rw"
-#    networks:
-#      - todo-app
-#    restart: unless-stopped
-#
+
+  todo-backend:
+    container_name: todo-backend
+    #    image: ddrram/todo-backend:${TODO_BACKEND_VERSION}
+    image: ddrram/todo-backend:1.3.312
+    ports:
+      - "5000:5000"
+    volumes:
+      - /root/logs:/opt/app/logs
+    depends_on:
+      - todo-db
+    networks:
+      - todo-app
+    environment:
+      SPRING_APPLICATION_JSON: '{
+        "spring.datasource.url": "jdbc:mysql://todo-db:3306/todo-db?useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true",
+        "spring.datasource.username": "root",
+        "spring.datasource.password": "todo",
+        "spring.datasource.driver-class-name": "com.mysql.cj.jdbc.Driver",
+        "spring.datasource.initialization-mode": "always",
+        "spring.jpa.show-sql": "true",
+        "spring.jpa.hibernate.ddl-auto": "update",
+        "spring.jpa.properties.hibernate.dialect": "org.hibernate.dialect.MySQL5InnoDBDialect"}'
+    restart: unless-stopped
+
+  todo-db:
+    container_name: todo-db
+    image: mysql:8.0.30
+    environment:
+      MYSQL_DATABASE: todo-db
+      MYSQL_ROOT_PASSWORD: todo
+    ports:
+      - "3306:3306"
+    volumes:
+      - "/root/usr/share/databases/todo-db:/var/lib/mysql:rw"
+    networks:
+      - todo-app
+    restart: unless-stopped
+
 #  todo-postgres:
 #    container_name: todo-postgres
 #    image: postgres
@@ -135,7 +135,7 @@ services:
 networks:
   todo-app: { }
 
-#volumes:
-#  todo-db: { }
+volumes:
+  todo-db: { }
 #  todo-postgres: { }
 # docker-compose -f docker/docker-compose-prod.yaml up -d
