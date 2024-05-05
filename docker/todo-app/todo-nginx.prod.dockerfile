@@ -10,6 +10,8 @@ RUN rm /usr/share/nginx/html/*
 
 COPY ./nginx/nginx.prod.conf /etc/nginx/nginx.conf
 
+COPY ./public /var/www/apps/
+
 COPY ./todo-app /var/www/apps/todo-app
 
 COPY ./wine-app /var/www/apps/wine-app
