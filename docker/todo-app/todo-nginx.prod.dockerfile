@@ -14,6 +14,10 @@ COPY ./nginx/nginx.prod.conf /etc/nginx/nginx.conf
 
 COPY ./todo-app /var/www/todo-app
 
+RUN apt-get update
+
+RUN apt-get install nano -y
+
 CMD ["nginx", "-g", "daemon off;"]
 
 # terminal
