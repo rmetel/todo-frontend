@@ -10,9 +10,9 @@ RUN rm /usr/share/nginx/html/*
 
 COPY ./nginx/nginx.prod.conf /etc/nginx/nginx.conf
 
-#COPY ./public /var/www/public
-
 COPY ./todo-app /var/www/todo-app
+
+COPY ./wine-app /var/www/wine-app
 
 RUN apt-get update
 
