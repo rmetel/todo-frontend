@@ -26,7 +26,7 @@ export default defineConfig({
         },
       },
     },
-    // target: "es2015",
+    target: "chrome62",
   },
   server: {
     port: 3000,
