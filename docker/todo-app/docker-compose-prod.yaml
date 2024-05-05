@@ -3,14 +3,14 @@ version: "3"
 services:
   nginx:
     container_name: nginx
-    image: ddrram/todo-nginx-prod:1.4.20
+    image: ddrram/todo-nginx-prod:1.4.21
     ports:
       - "80:80"
       - "443:443"
-    depends_on:
-      - todo-backend
-      - todo-frontend
-      - todo-keycloak
+    #    depends_on:
+    #      - todo-backend
+    #      - todo-frontend
+    #      - todo-keycloak
     networks:
       - todo-app
     volumes:
@@ -20,122 +20,122 @@ services:
     restart: unless-stopped
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
 
-  certbot-renewal:
-    image: certbot/certbot
-    container_name: certbot-renewal
-    depends_on:
-      - nginx
-    volumes:
-      - /root/usr/share/certbot/conf:/etc/letsencrypt
-      - /root/usr/share/certbot/www:/var/www/certbot
-    networks:
-      - todo-app
-    entrypoint: sh -c "certbot renew && sleep 7d"
-  #    command: renew
-  #    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
-
-  todo-frontend:
-    container_name: todo-frontend
-    #    image: ddrram/todo-frontend:${TODO_FRONTEND_VERSION}
-    image: ddrram/todo-frontend:1.3.170
-    ports:
-      - "3000:3000"
-    networks:
-      - todo-app
-    restart: unless-stopped
-
-  wine-app:
-    container_name: wine-app
-    image: ddrram/wine-app:1.0.3
-    ports:
-      - "3002:3002"
-    networks:
-      - todo-app
-    restart: unless-stopped
-
-  todo-backend:
-    container_name: todo-backend
-    #    image: ddrram/todo-backend:${TODO_BACKEND_VERSION}
-    image: ddrram/todo-backend:1.3.312
-    ports:
-      - "5000:5000"
-    volumes:
-      - /root/logs:/opt/app/logs
-    depends_on:
-      - todo-db
-    networks:
-      - todo-app
-    environment:
-      SPRING_APPLICATION_JSON: '{
-        "spring.datasource.url": "jdbc:mysql://todo-db:3306/todo-db?useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true",
-        "spring.datasource.username": "root",
-        "spring.datasource.password": "todo",
-        "spring.datasource.driver-class-name": "com.mysql.cj.jdbc.Driver",
-        "spring.datasource.initialization-mode": "always",
-        "spring.jpa.show-sql": "true",
-        "spring.jpa.hibernate.ddl-auto": "update",
-        "spring.jpa.properties.hibernate.dialect": "org.hibernate.dialect.MySQL5InnoDBDialect"}'
-    restart: unless-stopped
-
-  todo-db:
-    container_name: todo-db
-    image: mysql:8.0.30
-    environment:
-      MYSQL_DATABASE: todo-db
-      MYSQL_ROOT_PASSWORD: todo
-    ports:
-      - "3306:3306"
-    volumes:
-      - "/root/usr/share/databases/todo-db:/var/lib/mysql:rw"
-    networks:
-      - todo-app
-    restart: unless-stopped
-
-  todo-postgres:
-    container_name: todo-postgres
-    image: postgres
-    volumes:
-      - "/root/usr/share/databases/todo-postgres:/var/lib/postgresql/data:rw"
-    environment:
-      POSTGRES_DB: keycloak
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: todo
-    networks:
-      - todo-app
-
-  todo-keycloak:
-    container_name: todo-keycloak
-    image: quay.io/keycloak/keycloak:latest
-    command:
-      - start
-      - --proxy-headers=xforwarded
-      - --http-relative-path=/auth
-      - --hostname=todo-app.tech
-      - --https-certificate-file=/etc/x509/https/tls.crt
-      - --https-certificate-key-file=/etc/x509/https/tls.key
-    environment:
-      KC_DB: postgres
-      KC_DB_URL: jdbc:postgresql://todo-postgres:5432/keycloak
-      KC_DB_USERNAME: root
-      KC_DB_PASSWORD: todo
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
-    volumes:
-      - /root/usr/share/keycloak/data:/opt/keycloak/data
-      - /root/usr/share/keycloak/certs/conf/live/todo-app.tech/fullchain.pem:/etc/x509/https/tls.crt
-      - /root/usr/share/keycloak/certs/conf/live/todo-app.tech/privkey.pem:/etc/x509/https/tls.key
-    ports:
-      - "8080:8080"
-      - "8443:8443"
-    depends_on:
-      - todo-postgres
-    networks:
-      - todo-app
+#  certbot-renewal:
+#    image: certbot/certbot
+#    container_name: certbot-renewal
+#    depends_on:
+#      - nginx
+#    volumes:
+#      - /root/usr/share/certbot/conf:/etc/letsencrypt
+#      - /root/usr/share/certbot/www:/var/www/certbot
+#    networks:
+#      - todo-app
+#    entrypoint: sh -c "certbot renew && sleep 7d"
+#  #    command: renew
+#  #    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+#
+#  todo-frontend:
+#    container_name: todo-frontend
+#    #    image: ddrram/todo-frontend:${TODO_FRONTEND_VERSION}
+#    image: ddrram/todo-frontend:1.3.170
+#    ports:
+#      - "3000:3000"
+#    networks:
+#      - todo-app
+#    restart: unless-stopped
+#
+#  wine-app:
+#    container_name: wine-app
+#    image: ddrram/wine-app:1.0.3
+#    ports:
+#      - "3002:3002"
+#    networks:
+#      - todo-app
+#    restart: unless-stopped
+#
+#  todo-backend:
+#    container_name: todo-backend
+#    #    image: ddrram/todo-backend:${TODO_BACKEND_VERSION}
+#    image: ddrram/todo-backend:1.3.312
+#    ports:
+#      - "5000:5000"
+#    volumes:
+#      - /root/logs:/opt/app/logs
+#    depends_on:
+#      - todo-db
+#    networks:
+#      - todo-app
+#    environment:
+#      SPRING_APPLICATION_JSON: '{
+#        "spring.datasource.url": "jdbc:mysql://todo-db:3306/todo-db?useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true",
+#        "spring.datasource.username": "root",
+#        "spring.datasource.password": "todo",
+#        "spring.datasource.driver-class-name": "com.mysql.cj.jdbc.Driver",
+#        "spring.datasource.initialization-mode": "always",
+#        "spring.jpa.show-sql": "true",
+#        "spring.jpa.hibernate.ddl-auto": "update",
+#        "spring.jpa.properties.hibernate.dialect": "org.hibernate.dialect.MySQL5InnoDBDialect"}'
+#    restart: unless-stopped
+#
+#  todo-db:
+#    container_name: todo-db
+#    image: mysql:8.0.30
+#    environment:
+#      MYSQL_DATABASE: todo-db
+#      MYSQL_ROOT_PASSWORD: todo
+#    ports:
+#      - "3306:3306"
+#    volumes:
+#      - "/root/usr/share/databases/todo-db:/var/lib/mysql:rw"
+#    networks:
+#      - todo-app
+#    restart: unless-stopped
+#
+#  todo-postgres:
+#    container_name: todo-postgres
+#    image: postgres
+#    volumes:
+#      - "/root/usr/share/databases/todo-postgres:/var/lib/postgresql/data:rw"
+#    environment:
+#      POSTGRES_DB: keycloak
+#      POSTGRES_USER: root
+#      POSTGRES_PASSWORD: todo
+#    networks:
+#      - todo-app
+#
+#  todo-keycloak:
+#    container_name: todo-keycloak
+#    image: quay.io/keycloak/keycloak:latest
+#    command:
+#      - start
+#      - --proxy-headers=xforwarded
+#      - --http-relative-path=/auth
+#      - --hostname=todo-app.tech
+#      - --https-certificate-file=/etc/x509/https/tls.crt
+#      - --https-certificate-key-file=/etc/x509/https/tls.key
+#    environment:
+#      KC_DB: postgres
+#      KC_DB_URL: jdbc:postgresql://todo-postgres:5432/keycloak
+#      KC_DB_USERNAME: root
+#      KC_DB_PASSWORD: todo
+#      KEYCLOAK_ADMIN: admin
+#      KEYCLOAK_ADMIN_PASSWORD: admin
+#    volumes:
+#      - /root/usr/share/keycloak/data:/opt/keycloak/data
+#      - /root/usr/share/keycloak/certs/conf/live/todo-app.tech/fullchain.pem:/etc/x509/https/tls.crt
+#      - /root/usr/share/keycloak/certs/conf/live/todo-app.tech/privkey.pem:/etc/x509/https/tls.key
+#    ports:
+#      - "8080:8080"
+#      - "8443:8443"
+#    depends_on:
+#      - todo-postgres
+#    networks:
+#      - todo-app
 
 networks:
   todo-app: { }
 
-volumes:
-  todo-db: { }
-  todo-postgres: { }
+#volumes:
+#  todo-db: { }
+#  todo-postgres: { }
 # docker-compose -f docker/docker-compose-prod.yaml up -d
