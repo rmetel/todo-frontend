@@ -10,7 +10,7 @@ RUN rm /usr/share/nginx/html/*
 
 COPY ./nginx/nginx.prod.conf /etc/nginx/nginx.conf
 
-COPY ./public /var/www/public
+#COPY ./public /var/www/public
 
 COPY ./todo-app /var/www/todo-app
 
