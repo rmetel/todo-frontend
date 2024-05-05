@@ -11,7 +11,7 @@ const __dirname = path.dirname(__filename);
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: "/",
+  base: "/todo-app",
   resolve: {
     alias: {
       "~": path.resolve(__dirname, "./src")
