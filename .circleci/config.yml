@@ -26,10 +26,13 @@ jobs:
           name: Add known host
           command: ssh-keyscan $SSH_HOST >> ~/.ssh/known_hosts
       - run:
-          name: Deploy over SSH
+          name: Compress
           command: |
             tar -czvf todo-app.tar.gz todo-app
-#            scp todo-app.tar.gz $SSH_USER@$SSH_HOST:/var/www/todo-app.tar.gz
+      - run:
+          name: Deploy over SSH
+          command: |
+            scp todo-app.tar.gz $SSH_USER@$SSH_HOST:/var/www/todo-app.tar.gz
 
 #      - ssh:
 #          name: Deploy to production
@@ -46,7 +49,7 @@ jobs:
 #            docker-compose -f /git/todo-frontend/docker/todo-app/docker-compose.yml up -d
 
 workflows:
-  Node:
+  deploy:
     jobs:
       - build_and_deploy:
           context:
