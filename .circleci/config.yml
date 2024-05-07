@@ -32,7 +32,7 @@ jobs:
       - run:
           name: Deploy over SSH
           command: |
-            scp todo-app.tar.gz $SSH_USER@$SSH_HOST:/var/www/todo-app.tar.gz
+            scp todo-app.tar.gz $SSH_USER@$SSH_HOST:/var/www
 
 #      - ssh:
 #          name: Deploy to production
