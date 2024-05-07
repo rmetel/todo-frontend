@@ -10,15 +10,16 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install dependencies
+          name: npm i
           command: |
-            npm install
+            npm i
       - run:
-          name: Build the project
+          name: npm run build
           command: npm run build
       - run:
-          name: pwd
-          command: echo pwd && ls -la
+          name: Compress .tar.gz
+          command: |
+            tar -czvf todo-app.tar.gz todo-app
       - add_ssh_keys:
           fingerprints:
             - "2b:a4:ba:38:78:e6:13:5e:53:bc:8e:8b:59:3a:c0:fe"
@@ -26,31 +27,13 @@ jobs:
           name: Add known host
           command: ssh-keyscan $SSH_HOST >> ~/.ssh/known_hosts
       - run:
-          name: Compress
-          command: |
-            tar -czvf todo-app.tar.gz todo-app
-      - run:
-          name: Upload via SCP
+          name: Upload via scp
           command: |
             scp todo-app.tar.gz $SSH_USER@$SSH_HOST:/var/www
       - run:
-          name: Extract and deploy via SSH
+          name: Extract and deploy via ssh
           command: |
             ssh $SSH_USER@$SSH_HOST "cd /var/www && tar -xzvf todo-app.tar.gz"
-
-#      - ssh:
-#          name: Deploy to production
-#          host: $SSH_HOST
-#          user: $SSH_USER
-#          private_key: ~/circleci/ssh-key.pem
-#          commands:
-#            - 'mkdir -p /var/www/todo-app'
-#            - 'rsync -avz --delete dist/ $SSH_USER@$SSH_HOST:/var/www/todo-app'
-#            - 'echo "Deployed successfully"'
-#      - run:
-#          name: Restart NGINX using Docker Compose
-#          command: |
-#            docker-compose -f /git/todo-frontend/docker/todo-app/docker-compose.yml up -d
 
 workflows:
   deploy:
