@@ -13,7 +13,7 @@ services:
     networks:
       - todo-app
     volumes:
-      - /usr/share/applications/todo-app:/var/www/apps/todo-app
+      - /root/git/todo-app:/var/www/apps/todo-app
       - /root/usr/share/certbot/conf:/etc/letsencrypt
       - /root/usr/share/certbot/www:/var/www/certbot
       - /root/git/todo-frontend/nginx/nginx.prod.conf:/etc/nginx/nginx.conf
