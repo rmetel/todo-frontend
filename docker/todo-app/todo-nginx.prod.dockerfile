@@ -27,3 +27,4 @@ CMD ["nginx", "-g", "daemon off;"]
 # docker hub
 # docker build -t ddrram/todo-nginx-prod:1.5.0 -f docker/todo-app/todo-nginx.prod.dockerfile .
 # docker push ddrram/todo-nginx-prod:1.5.0
+# docker run --name nginx -dp 80:80 -p 443:443 ddrram/todo-nginx-prod:1.5.0
