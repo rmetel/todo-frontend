@@ -1,74 +1,38 @@
 version: 2.1
-
 orbs:
-  docker: circleci/docker@2.2.0
-
+  ssh: circleci/ssh@1.0.0
 jobs:
-  build-push:
-    docker:
-      - image: cimg/node:$NODE_VERSION
-    environment:
-      BUILD_NUMBER: << pipeline.number >>
+  build_and_deploy:
+    executor:
+      name: ubuntu-2004
+      docker:
+        - image: 'ubuntu:20.04'
     steps:
-      # Checkout the code as the first step.
       - checkout
-
-      # Install Docker
-      - setup_remote_docker
-
-      # Echo build number
       - run:
-          name: Echo build number
-          command: echo $BUILD_NUMBER
-
-      # Login into Docker Hub
-      - run:
-          name: Docker login
-          command: echo $DOCKER_PASSWORD | docker login --username $DOCKER_USER --password-stdin
-
-      # Build Docker image
-      - docker/build:
-          docker-context: .
-          path: ./docker
-          dockerfile: todo-frontend.dockerfile
-          image: ddrram/todo-frontend
-          tag: 1.3.$BUILD_NUMBER
-
-      # Push Docker image
-      - docker/push:
-          image: ddrram/todo-frontend
-          tag: 1.3.$BUILD_NUMBER
-  deploy:
-    docker:
-      - image: cimg/node:$NODE_VERSION
-    environment:
-      BUILD_NUMBER: << pipeline.number >>
-      DEPLOY_SCRIPT: ~/git/todo-frontend/deploy.sh
-    steps:
-      - run:
-          name: Timestamp
-          command: echo timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
-      - run:
-          name: Echo build number
-          command: echo ${BUILD_NUMBER}
-      - add_ssh_keys:
-          fingerprints:
-            - "2b:a4:ba:38:78:e6:13:5e:53:bc:8e:8b:59:3a:c0:fe"
-      - run:
-          name: Add known host
-          command: ssh-keyscan $SSH_HOST >> ~/.ssh/known_hosts
-      - run:
-          name: Deploy over SSH
+          name: Install dependencies
           command: |
-            ssh $SSH_USER@$SSH_HOST "echo -en '<version>1.3.${BUILD_NUMBER}</version>\n<branch>${CIRCLE_BRANCH}</branch>' > ~/logs/pipeline/todo-frontend.log && chmod 755 $DEPLOY_SCRIPT && bash $DEPLOY_SCRIPT && exit"
+            npm install
+      - run:
+          name: Build the project
+          command: npm run build
+      - ssh:
+          name: Deploy to production
+          host: $SSH_HOST
+          user: $SSH_USER
+          private_key: ~/circleci/ssh-key.pem
+          commands:
+            - 'mkdir -p /var/www/todo-app'
+            - 'rsync -avz --delete dist/ $SSH_USER@$SSH_HOST:/var/www/todo-app'
+            - 'echo "Deployed successfully"'
+      - run:
+          name: Restart NGINX using Docker Compose
+          command: |
+            docker-compose -f /git/todo-frontend/docker/todo-app/docker-compose.yml up -d
+
 workflows:
   Node:
     jobs:
-      - build-push:
+      - build_and_deploy:
           context:
             - build-context
-      - deploy:
-          context:
-            - build-context
-          requires:
-            - build-push
