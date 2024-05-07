@@ -30,9 +30,13 @@ jobs:
           command: |
             tar -czvf todo-app.tar.gz todo-app
       - run:
-          name: Deploy over SSH
+          name: Upload via SCP
           command: |
             scp todo-app.tar.gz $SSH_USER@$SSH_HOST:/var/www
+      - run:
+          name: Extract and deploy via SSH
+          command: |
+            ssh $SSH_USER@$SSH_HOST "cd /var/www && tar -xzvf todo-app.tar.gz"
 
 #      - ssh:
 #          name: Deploy to production
