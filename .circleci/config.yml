@@ -16,19 +16,19 @@ jobs:
       - run:
           name: Build the project
           command: npm run build
-      - ssh:
-          name: Deploy to production
-          host: $SSH_HOST
-          user: $SSH_USER
-          private_key: ~/circleci/ssh-key.pem
-          commands:
-            - 'mkdir -p /var/www/todo-app'
-            - 'rsync -avz --delete dist/ $SSH_USER@$SSH_HOST:/var/www/todo-app'
-            - 'echo "Deployed successfully"'
-      - run:
-          name: Restart NGINX using Docker Compose
-          command: |
-            docker-compose -f /git/todo-frontend/docker/todo-app/docker-compose.yml up -d
+#      - ssh:
+#          name: Deploy to production
+#          host: $SSH_HOST
+#          user: $SSH_USER
+#          private_key: ~/circleci/ssh-key.pem
+#          commands:
+#            - 'mkdir -p /var/www/todo-app'
+#            - 'rsync -avz --delete dist/ $SSH_USER@$SSH_HOST:/var/www/todo-app'
+#            - 'echo "Deployed successfully"'
+#      - run:
+#          name: Restart NGINX using Docker Compose
+#          command: |
+#            docker-compose -f /git/todo-frontend/docker/todo-app/docker-compose.yml up -d
 
 workflows:
   Node:
