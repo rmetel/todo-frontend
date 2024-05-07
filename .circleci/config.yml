@@ -16,16 +16,19 @@ jobs:
       - run:
           name: Build the project
           command: npm run build
+      - run:
+          name: pwd
+          command: echo pwd && ls -la
       - add_ssh_keys:
           fingerprints:
             - "2b:a4:ba:38:78:e6:13:5e:53:bc:8e:8b:59:3a:c0:fe"
       - run:
           name: Add known host
           command: ssh-keyscan $SSH_HOST >> ~/.ssh/known_hosts
-      - run:
-          name: Deploy over SSH
-          command: |
-            scp -r /todo-app $SSH_USER@$SSH_HOST:/var/www/todo-app
+#      - run:
+#          name: Deploy over SSH
+#          command: |
+#            scp -r /todo-app $SSH_USER@$SSH_HOST:/var/www/todo-app
 
 #      - ssh:
 #          name: Deploy to production
