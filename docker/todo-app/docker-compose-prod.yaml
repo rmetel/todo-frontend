@@ -3,13 +3,12 @@ version: "3"
 services:
   nginx:
     container_name: nginx
-    image: ddrram/todo-nginx-prod:1.4.28
+    image: ddrram/todo-nginx-prod:1.5.0
     ports:
       - "80:80"
       - "443:443"
     depends_on:
       - todo-backend
-    #      - todo-frontend
     #      - todo-keycloak
     networks:
       - todo-app
@@ -17,41 +16,23 @@ services:
       - /root/usr/share/certbot/conf:/etc/letsencrypt
       - /root/usr/share/certbot/www:/var/www/certbot
       - /root/git/todo-frontend/nginx/nginx.prod.conf:/etc/nginx/nginx.conf
+      - /root/var/www/todo-app:/var/www/apps/todo-app
     restart: unless-stopped
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
 
-#  certbot-renewal:
-#    image: certbot/certbot
-#    container_name: certbot-renewal
-#    depends_on:
-#      - nginx
-#    volumes:
-#      - /root/usr/share/certbot/conf:/etc/letsencrypt
-#      - /root/usr/share/certbot/www:/var/www/certbot
-#    networks:
-#      - todo-app
-#    entrypoint: sh -c "certbot renew && sleep 7d"
-#  #    command: renew
-#  #    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
-
-#  todo-frontend:
-#    container_name: todo-frontend
-#    #    image: ddrram/todo-frontend:${TODO_FRONTEND_VERSION}
-#    image: ddrram/todo-frontend:1.3.170
-#    ports:
-#      - "3000:3000"
-#    networks:
-#      - todo-app
-#    restart: unless-stopped
-#
-#  wine-app:
-#    container_name: wine-app
-#    image: ddrram/wine-app:1.0.3
-#    ports:
-#      - "3002:3002"
-#    networks:
-#      - todo-app
-#    restart: unless-stopped
+  certbot-renewal:
+    image: certbot/certbot
+    container_name: certbot-renewal
+    depends_on:
+      - nginx
+    volumes:
+      - /root/usr/share/certbot/conf:/etc/letsencrypt
+      - /root/usr/share/certbot/www:/var/www/certbot
+    networks:
+      - todo-app
+    entrypoint: sh -c "certbot renew && sleep 7d"
+  #    command: renew
+  #    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
   todo-backend:
     container_name: todo-backend

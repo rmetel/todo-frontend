@@ -12,9 +12,7 @@ COPY ./nginx/nginx.prod.conf /etc/nginx/nginx.conf
 
 COPY ./public /var/www/apps/
 
-COPY ./todo-app /var/www/apps/todo-app
-
-COPY ./wine-app /var/www/apps/wine-app
+#COPY ./wine-app /var/www/apps/wine-app
 
 RUN apt-get update
 
@@ -27,5 +25,5 @@ CMD ["nginx", "-g", "daemon off;"]
 # docker run --name todo-nginx-prod -dp 80:80 -p 443:443 todo-nginx-prod
 
 # docker hub
-# docker build -t ddrram/todo-nginx-prod:1.4.0 -f docker/todo-app/todo-nginx.prod.dockerfile .
-# docker push ddrram/todo-nginx-prod:1.4.0
+# docker build -t ddrram/todo-nginx-prod:1.5.0 -f docker/todo-app/todo-nginx.prod.dockerfile .
+# docker push ddrram/todo-nginx-prod:1.5.0
