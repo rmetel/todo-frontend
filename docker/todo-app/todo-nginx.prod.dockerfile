@@ -12,8 +12,6 @@ COPY ./nginx/nginx.prod.conf /etc/nginx/nginx.conf
 
 COPY ./public /var/www/apps/
 
-#COPY ./wine-app /var/www/apps/wine-app
-
 RUN apt-get update
 
 RUN apt-get install nano -y
