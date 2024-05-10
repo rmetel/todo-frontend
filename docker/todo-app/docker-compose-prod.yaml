@@ -16,7 +16,6 @@ services:
       - /root/usr/share/apps/todo-app:/var/www/apps/todo-app
       - /root/usr/share/certbot/conf:/etc/letsencrypt
       - /root/usr/share/certbot/www:/var/www/certbot
-      # - /root/git/todo-frontend/nginx/nginx.prod.conf:/etc/nginx/nginx.conf
     restart: unless-stopped
     command: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''
 
