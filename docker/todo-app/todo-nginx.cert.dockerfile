@@ -19,6 +19,6 @@ CMD ["nginx", "-g", "daemon off;"]
 # docker run --name todo-nginx-cert -dp 80:80 -p 443:443 todo-nginx-cert
 
 # docker hub
-# docker build -t ddrram/todo-nginx-cert:2.1.0 -f docker/todo-nginx.cert.dockerfile .
+# docker build -t ddrram/todo-nginx-cert:2.1.0 -f docker/todo-app/todo-nginx.cert.dockerfile .
 # docker push ddrram/todo-nginx-cert:2.1.0
 # docker run --name todo-nginx-cert -dp 8080:8080 ddrram/todo-nginx-cert:2.1.0
