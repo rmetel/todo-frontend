@@ -1,8 +1,5 @@
 version: 2.1
 
-orbs:
-  docker: circleci/docker@2.2.0
-
 jobs:
   build_and_deploy:
     docker:
@@ -29,11 +26,11 @@ jobs:
       - run:
           name: Upload via scp
           command: |
-            scp todo-app.tar.gz $SSH_USER@$SSH_HOST:/var/www
+            scp todo-app.tar.gz $SSH_USER@$SSH_HOST:/root/usr/share/apps
       - run:
           name: Extract and deploy via ssh
           command: |
-            ssh $SSH_USER@$SSH_HOST "cd /var/www && tar -xzvf todo-app.tar.gz"
+            ssh $SSH_USER@$SSH_HOST "cd /root/usr/share/apps && tar -xzvf todo-app.tar.gz"
 
 workflows:
   deploy:
