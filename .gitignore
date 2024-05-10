@@ -11,8 +11,6 @@
 # production
 /build
 /dist
-todo-app
-wine-app
 
 # misc
 .DS_Store
