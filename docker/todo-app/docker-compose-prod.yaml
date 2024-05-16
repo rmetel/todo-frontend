@@ -3,7 +3,7 @@ version: "3"
 services:
   nginx:
     container_name: nginx
-    image: ddrram/todo-nginx-prod:1.5.1
+    image: ddrram/todo-nginx-prod:1.5.4
     ports:
       - "80:80"
       - "443:443"
@@ -13,6 +13,7 @@ services:
     networks:
       - todo-app
     volumes:
+      - /root/usr/share/apps/devision.tech:/var/www/apps
       - /root/usr/share/apps/todo-app:/var/www/apps/todo-app
       - /root/usr/share/certbot/conf:/etc/letsencrypt
       - /root/usr/share/certbot/www:/var/www/certbot
