@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  nginx:
+    container_name: nginx
+    image: ddrram/todo-nginx-cert:2.1.0
+    ports:
+      - "80:80"
+    networks:
+      - todo-app
+    volumes:
+      - /root/usr/share/certbot/conf:/etc/letsencrypt
+      - /root/usr/share/certbot/www:/var/www/certbot
+    restart: unless-stopped
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    depends_on:
+      - nginx
+    volumes:
+      - /root/usr/share/certbot/conf:/etc/letsencrypt
+      - /root/usr/share/certbot/www:/var/www/certbot
+    command: certonly --webroot -w /var/www/certbot --force-renewal --email ralph.metel@gmx.de -d devision.tech --agree-tos
+    networks:
+      - todo-app
+
+networks:
+  todo-app: {}
+# docker-compose -f docker/docker-compose-cert.yaml up -d

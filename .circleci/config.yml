@@ -1,56 +1,26 @@
 version: 2.1
 
-orbs:
-  docker: circleci/docker@2.2.0
+executors:
+  docker-container:
+    docker:
+      - image: cimg/node:20.13.0
 
 jobs:
-  build-push:
-    docker:
-      - image: cimg/node:$NODE_VERSION
-    environment:
-      BUILD_NUMBER: << pipeline.number >>
+  build_and_deploy:
+    executor: docker-container
     steps:
-      # Checkout the code as the first step.
       - checkout
-
-      # Install Docker
-      - setup_remote_docker
-
-      # Echo build number
       - run:
-          name: Echo build number
-          command: echo $BUILD_NUMBER
-
-      # Login into Docker Hub
+          name: Install dependencies
+          command: |
+            npm i
       - run:
-          name: Docker login
-          command: echo $DOCKER_PASSWORD | docker login --username $DOCKER_USER --password-stdin
-
-      # Build Docker image
-      - docker/build:
-          docker-context: .
-          path: ./docker
-          dockerfile: todo-frontend.dockerfile
-          image: ddrram/todo-frontend
-          tag: 1.3.$BUILD_NUMBER
-
-      # Push Docker image
-      - docker/push:
-          image: ddrram/todo-frontend
-          tag: 1.3.$BUILD_NUMBER
-  deploy:
-    docker:
-      - image: cimg/node:$NODE_VERSION
-    environment:
-      BUILD_NUMBER: << pipeline.number >>
-      DEPLOY_SCRIPT: ~/git/todo-frontend/deploy.sh
-    steps:
+          name: Build the project
+          command: npm run build
       - run:
-          name: Timestamp
-          command: echo timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
-      - run:
-          name: Echo build number
-          command: echo ${BUILD_NUMBER}
+          name: Compress .tar.gz
+          command: |
+            tar -czvf todo-app.tar.gz todo-app
       - add_ssh_keys:
           fingerprints:
             - "2b:a4:ba:38:78:e6:13:5e:53:bc:8e:8b:59:3a:c0:fe"
@@ -58,17 +28,17 @@ jobs:
           name: Add known host
           command: ssh-keyscan $SSH_HOST >> ~/.ssh/known_hosts
       - run:
-          name: Deploy over SSH
+          name: Upload via scp
           command: |
-            ssh $SSH_USER@$SSH_HOST "echo -en '<version>1.3.${BUILD_NUMBER}</version>\n<branch>${CIRCLE_BRANCH}</branch>' > ~/logs/pipeline/todo-frontend.log && chmod 755 $DEPLOY_SCRIPT && bash $DEPLOY_SCRIPT && exit"
+            scp todo-app.tar.gz $SSH_USER@$SSH_HOST:/root/usr/share/apps
+      - run:
+          name: Extract and deploy via ssh
+          command: |
+            ssh $SSH_USER@$SSH_HOST "cd /root/usr/share/apps && tar -xzvf todo-app.tar.gz"
+
 workflows:
-  Node:
+  deploy:
     jobs:
-      - build-push:
+      - build_and_deploy:
           context:
             - build-context
-      - deploy:
-          context:
-            - build-context
-          requires:
-            - build-push

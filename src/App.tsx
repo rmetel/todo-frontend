@@ -18,7 +18,7 @@ const App = () => {
         <Row>
           <Col className={"col-lg-8 offset-lg-2"}>
             <ReactKeycloakProvider authClient={keycloak}>
-              <Router>
+              <Router basename="/todo-app">
                 <Routes>
                   <Route path="/" element={<Tasks />} />
                   <Route
