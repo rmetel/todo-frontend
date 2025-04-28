@@ -16,7 +16,7 @@ const App = () => {
     <div className="App">
       <Container className="mt-4">
         <Row>
-          <Col className={"col-lg-8 offset-lg-2"}>
+          <Col className="col-lg-8 offset-lg-2">
             <ReactKeycloakProvider authClient={keycloak}>
               <Router basename="/todo-app">
                 <Routes>
