@@ -34,7 +34,7 @@ jobs:
       - run:
           name: Extract and deploy via ssh
           command: |
-            ssh $SSH_USER@$SSH_HOST "cd /root/usr/share/apps && tar -xzvf todo-app.tar.gz"
+            ssh $SSH_USER@$SSH_HOST "cd /root/usr/share/apps && tar -xzvf todo-app.tar.gz && rm -rf todo-app && mv build todo-app"
 
 workflows:
   deploy:
