@@ -6,7 +6,7 @@ import {
   Form,
   InputGroup,
   ListGroup,
-  Row
+  Row,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios, { AxiosError } from "axios";
@@ -73,7 +73,7 @@ export const Tasks: React.FC = () => {
     const params = {
       id: task.id,
       description: task.description,
-      done: !task.done
+      done: !task.done,
     };
 
     axios
@@ -88,7 +88,9 @@ export const Tasks: React.FC = () => {
       });
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLFormElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     setTaskName(e.target.value);
   };
 
@@ -109,7 +111,7 @@ export const Tasks: React.FC = () => {
           aria-label="ToDo"
           aria-describedby="New task"
           value={taskName}
-          onChange={(e) => handleChange(e as any)}
+          onChange={(e) => handleChange(e)}
           onKeyDown={handleKeyDown}
         />
         <Button
