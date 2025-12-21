@@ -1,24 +1,23 @@
 /// <reference types="vitest" />
-import { defineConfig } from "vite";
+import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import * as path from "path";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
-
 const __dirname = path.dirname(__filename);
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: "/todo-app",
+  base: "/",
   resolve: {
     alias: {
-      "~": path.resolve(__dirname, "./src")
+      "~": path.resolve(__dirname, "./src"),
     },
   },
   build: {
-    outDir: "todo-app",
+    outDir: "build",
     rollupOptions: {
       output: {
         manualChunks: {
@@ -39,6 +38,6 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "jsdom", // https://zenn.dev/builder_search/articles/14d8cc0dd2e606
-    setupFiles: ["./setupTests.ts"]
-  }
+    setupFiles: ["./setupTests.ts"],
+  },
 });
