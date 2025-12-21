@@ -20,7 +20,7 @@ jobs:
       - run:
           name: Compress .tar.gz
           command: |
-            tar -czvf todo-app.tar.gz todo-app
+            tar -czvf todo-app.tar.gz build
       - add_ssh_keys:
           fingerprints:
             - "2b:a4:ba:38:78:e6:13:5e:53:bc:8e:8b:59:3a:c0:fe"
