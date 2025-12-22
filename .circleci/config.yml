@@ -20,7 +20,7 @@ jobs:
       - run:
           name: Compress .tar.gz
           command: |
-            tar -czvf todo-app.tar.gz build
+            tar -czvf todo-app.tar.gz todo-app
       - add_ssh_keys:
           fingerprints:
             - "2b:a4:ba:38:78:e6:13:5e:53:bc:8e:8b:59:3a:c0:fe"
@@ -34,7 +34,7 @@ jobs:
       - run:
           name: Extract and deploy via ssh
           command: |
-            ssh $SSH_USER@$SSH_HOST "cd /root/usr/share/apps && tar -xzvf todo-app.tar.gz && rm -rf todo-app && mv build todo-app"
+            ssh $SSH_USER@$SSH_HOST "cd /root/usr/share/apps && tar -xzvf todo-app.tar.gz && rm todo-app.tar.gz"
 
 workflows:
   deploy:

@@ -19,11 +19,14 @@ const App = () => {
               <RouterProvider router={router} />
               <h6 id="apiVersion">
                 <Badge bg="info" className="mb-1">
-                  fe: main 1.3.117
+                  fe: unknown
                 </Badge>
                 <br />
                 <Badge bg="secondary">
-                  be: {api.branch} {api.version}
+                  be:{" "}
+                  {api.branch && api.version
+                    ? `${api.branch} ${api.version}`
+                    : "unknown"}
                 </Badge>
               </h6>
             </ReactKeycloakProvider>

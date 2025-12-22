@@ -17,7 +17,7 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: "build",
+    outDir: "todo-app",
     rollupOptions: {
       output: {
         manualChunks: {
