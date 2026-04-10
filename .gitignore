@@ -33,4 +33,4 @@ yarn-error.log*
 cert.key
 cert.crt
 
-todo-app
+/todo-app
